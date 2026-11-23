@@ -1,0 +1,2391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM Overview - Travel Agency WhatsApp Automation</title>
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">TA</div>
+        <div class="sidebar-brand-name">Travel CRM</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Core Operations</div>
+        <a href="/dashboard" class="nav-item" data-path="/dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Overview
+        </a>
+        <a href="/dashboard/leads" class="nav-item" data-path="/dashboard/leads">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          Leads
+        </a>
+        <a href="/dashboard/campaigns" class="nav-item" data-path="/dashboard/campaigns">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Campaigns
+        </a>
+        <a href="/dashboard/approvals" class="nav-item" data-path="/dashboard/approvals">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Batch Approvals
+        </a>
+        <a href="/dashboard/followups" class="nav-item" data-path="/dashboard/followups">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Follow-up Schedules
+        </a>
+
+        <div class="nav-section-title">Data & Configuration</div>
+        <a href="/dashboard/excel" class="nav-item" data-path="/dashboard/excel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Excel Sync
+        </a>
+        <a href="/dashboard/reports" class="nav-item" data-path="/dashboard/reports">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Delivery Reports
+        </a>
+        <a href="/dashboard/settings" class="nav-item" data-path="/dashboard/settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          Settings
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="sidebarLogoutBtn" class="nav-item" style="width: 100%; border: none; background: transparent; cursor: pointer; color: #f87171;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <!-- Top Sticky Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Toggle Navigation">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="header-breadcrumb-context">
+            <span class="header-context-label">Travel CRM</span>
+            <span class="header-context-sep">/</span>
+            <span id="pageTitle" class="page-title">Overview</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="system-status-indicator" id="headerApiStatusIndicator" title="WhatsApp Meta Cloud Integration Status">
+            <span id="headerApiStatusDot" class="status-dot inactive"></span>
+            <span id="headerApiStatusText">WhatsApp API Checking...</span>
+          </div>
+
+          <div id="userProfileBadge" class="user-profile-badge">
+            <span id="userProfileName">admin</span>
+            <span id="userRoleTag" class="user-role-tag">ADMIN</span>
+          </div>
+
+          <button id="headerLogoutBtn" class="header-logout-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Sign Out
+          </button>
+        </div>
+      </header>
+
+      <!-- Scrollable Main Content -->
+      <main class="content-container">
+        <!-- 1. OVERVIEW VIEW CONTAINER (Active on /dashboard) -->
+        <div id="overviewContainer">
+          <!-- Welcome Action Banner -->
+          <div class="welcome-banner">
+            <div class="welcome-text">
+              <h2>WhatsApp Follow-up Automation</h2>
+              <p>Real-time campaign status, customer opt-in compliance, and automated scheduling metrics.</p>
+            </div>
+            <div class="banner-actions">
+              <button id="refreshStatsBtn" class="btn-banner">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Refresh Stats
+              </button>
+              <button id="syncExcelBtn" class="btn-banner-secondary">
+                Sync Workbook
+              </button>
+            </div>
+          </div>
+
+          <!-- KPI Metrics Grid (14 Database-Backed Statistics) -->
+          <div class="stats-grid">
+            <!-- 1. Lead Management Card -->
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Customer Leads</span>
+                <div class="stat-icon-badge stat-icon-blue">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                </div>
+              </div>
+              <div id="statTotalLeads" class="stat-main-number">--</div>
+              <div class="stat-sub-metrics">
+                <span class="sub-metric-pill">Pending: <strong id="statPendingLeads">--</strong></span>
+                <span class="sub-metric-pill">Replied: <strong id="statRepliedLeads">--</strong></span>
+                <span class="sub-metric-pill">Confirmed: <strong id="statConfirmedLeads">0</strong></span>
+                <span class="sub-metric-pill">Opted In: <strong id="statOptedInLeads" style="color: var(--success);">--</strong></span>
+                <span class="sub-metric-pill">Opted Out: <strong id="statOptedOutLeads" style="color: var(--danger);">--</strong></span>
+              </div>
+            </div>
+
+            <!-- 2. Marketing Broadcast Campaigns -->
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Broadcast Campaigns</span>
+                <div class="stat-icon-badge stat-icon-green">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                </div>
+              </div>
+              <div id="statTotalCampaigns" class="stat-main-number">--</div>
+              <div class="stat-sub-metrics">
+                <span class="sub-metric-pill">Active / In-Flight: <strong id="statActiveCampaigns" style="color: var(--primary);">--</strong></span>
+                <span class="sub-metric-pill">Batch Cap: <strong>50 per batch</strong></span>
+              </div>
+            </div>
+
+            <!-- 3. Message Delivery Performance -->
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Message Delivery</span>
+                <div class="stat-icon-badge stat-icon-yellow">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+                </div>
+              </div>
+              <div id="statTotalMessages" class="stat-main-number">--</div>
+              <div class="stat-sub-metrics">
+                <span class="sub-metric-pill">Delivered: <strong id="statDeliveredMessages" style="color: var(--success);">--</strong></span>
+                <span class="sub-metric-pill">Read: <strong id="statReadMessages" style="color: #6366f1;">--</strong></span>
+                <span class="sub-metric-pill">Failed: <strong id="statFailedMessages" style="color: var(--danger);">--</strong></span>
+                <span class="sub-metric-pill"><strong id="statDeliveryRate">--</strong></span>
+              </div>
+            </div>
+
+            <!-- 4. Follow-up Scheduler Automation -->
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Follow-up Automation</span>
+                <div class="stat-icon-badge stat-icon-purple">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+              </div>
+              <div id="statScheduledFollowups" class="stat-main-number">--</div>
+              <div class="stat-sub-metrics">
+                <span class="sub-metric-pill">APScheduler: <strong>60s Poll</strong></span>
+                <span class="sub-metric-pill">Last Sync: <strong id="lastSyncTime">--</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interested Leads Action Queue Card -->
+          <div id="interestedLeadsActionCard" class="section-card" style="margin-bottom: 1.5rem; border-left: 4px solid #f59e0b;">
+            <div class="section-card-header">
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <div style="width: 28px; height: 28px; border-radius: 50%; background: #fef3c7; color: #b45309; display: flex; align-items: center; justify-content: center;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </div>
+                <div class="section-card-title" style="margin: 0;">Interested Leads — Action Required</div>
+                <span id="dashboardInterestedCountBadge" class="queue-badge empty">0</span>
+              </div>
+              <a href="/dashboard/leads?tab=interested" id="viewAllInterestedLink" class="btn-action-outline" style="font-size: 0.8rem; padding: 0.35rem 0.75rem; text-decoration: none;">
+                View All Interested &rarr;
+              </a>
+            </div>
+            <div class="section-card-body">
+              <div id="dashboardInterestedLeadsList">
+                <div class="empty-state">
+                  <div class="empty-state-title" style="font-size: 0.9rem; color: #64748b;">No leads currently awaiting a callback. Inbound interested replies will appear here automatically.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Split Grid: Recent Activity & System Operations -->
+          <div class="overview-sections-grid">
+            <!-- Recent Activity Timeline -->
+            <div class="section-card">
+              <div class="section-card-header">
+                <div class="section-card-title">Recent System Activity</div>
+              </div>
+              <div class="section-card-body">
+                <div id="activityList" class="activity-timeline">
+                  <div class="empty-state">
+                    <div class="empty-state-title">Loading recent events...</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- System Health Card -->
+            <div class="section-card">
+              <div class="section-card-header">
+                <div class="section-card-title">Integration & Health</div>
+              </div>
+              <div class="section-card-body">
+                <div class="system-health-list">
+                  <div class="health-row">
+                    <span class="health-label">Database Engine</span>
+                    <span class="health-status-tag active">SQLite (WAL)</span>
+                  </div>
+                  <div class="health-row">
+                    <span class="health-label">Background Scheduler</span>
+                    <span id="schedulerStatusTag" class="health-status-tag active">ACTIVE</span>
+                  </div>
+                  <div class="health-row">
+                    <span class="health-label">Meta Cloud API</span>
+                    <span id="whatsappStatusTag" class="health-status-tag inactive">OFFLINE (MOCK)</span>
+                  </div>
+                  <div class="health-row">
+                    <span class="health-label">Webhook Verification</span>
+                    <span class="health-status-tag active">HMAC-SHA256</span>
+                  </div>
+                  <div class="health-row">
+                    <span class="health-label">Session Security</span>
+                    <span class="health-status-tag active">HttpOnly + CSRF</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. LEADS MANAGEMENT CONTAINER (Active on /dashboard/leads) -->
+        <div id="leadsContainer" class="leads-container hidden">
+          <!-- Leads View Top Bar -->
+          <div class="leads-view-header crm-page-header page-header">
+            <div class="crm-header-left page-header-left">
+              <div class="breadcrumb-bar">
+                <a href="/dashboard">Dashboard</a>
+                <span>/</span>
+                <span>Leads</span>
+              </div>
+              <h2 class="leads-view-title crm-header-title page-header-title">Lead Management Directory</h2>
+              <p class="leads-view-desc crm-header-subtitle page-header-subtitle">Search, filter, manage customer contact records, WhatsApp opt-in consent compliance, and automated follow-up sequences.</p>
+            </div>
+            <div class="leads-view-actions crm-header-actions page-header-actions">
+              <button id="refreshLeadsBtn" class="btn-action-outline">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Refresh
+              </button>
+              <button id="openCreateLeadModalBtn" class="btn-action-primary">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add Lead
+              </button>
+            </div>
+          </div>
+
+          <!-- Queue Quick Filter Tabs -->
+          <div class="leads-queue-tabs">
+            <button type="button" id="tabAllLeadsBtn" class="queue-tab-btn active">
+              All Leads
+            </button>
+            <button type="button" id="tabInterestedCallsBtn" class="queue-tab-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              Interested — Needs Call
+              <span id="interestedQueueBadge" class="queue-badge empty">0</span>
+            </button>
+          </div>
+
+          <!-- Filters & Search Toolbar -->
+          <div class="leads-toolbar-card">
+            <div class="toolbar-search-wrapper">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="leadSearchInput" class="toolbar-search-input" placeholder="Search by name, phone (+91...), or serial number..." autocomplete="off">
+              <button id="clearSearchBtn" class="clear-search-btn hidden" title="Clear search">&times;</button>
+            </div>
+
+            <div class="toolbar-filters-group">
+              <div class="filter-item">
+                <label for="leadStatusFilter" class="filter-label">Lead Status</label>
+                <select id="leadStatusFilter" class="filter-select">
+                  <option value="">All Statuses</option>
+                  <option value="Interested">Interested</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Replied">Replied</option>
+                  <option value="Not Interested">Not Interested</option>
+                </select>
+              </div>
+
+              <div class="filter-item">
+                <label for="leadConsentFilter" class="filter-label">WhatsApp Consent</label>
+                <select id="leadConsentFilter" class="filter-select">
+                  <option value="">All Consents</option>
+                  <option value="OPTED_IN">OPTED_IN (Consented)</option>
+                  <option value="NOT_OPTED_IN">NOT_OPTED_IN (Unverified)</option>
+                  <option value="OPTED_OUT">OPTED_OUT (Suppressed)</option>
+                </select>
+              </div>
+
+              <div class="filter-item">
+                <label for="leadFollowupFilter" class="filter-label">Follow-up State</label>
+                <select id="leadFollowupFilter" class="filter-select">
+                  <option value="">All States</option>
+                  <option value="false">Active Automation</option>
+                  <option value="true">Paused Automation</option>
+                </select>
+              </div>
+
+              <button id="resetLeadFiltersBtn" class="btn-reset-filters" title="Reset all filters">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- Leads Data Table Card -->
+          <div class="leads-table-card">
+            <div class="table-responsive">
+              <table id="leadsTable" class="data-table">
+                <thead>
+                  <tr>
+                    <th class="sortable" data-sort="id">ID <span class="sort-icon"></span></th>
+                    <th class="sortable" data-sort="serial_number">Serial <span class="sort-icon"></span></th>
+                    <th class="sortable" data-sort="customer_name">Customer Name <span class="sort-icon"></span></th>
+                    <th>Phone Number</th>
+                    <th>Lead Status</th>
+                    <th>WhatsApp Consent</th>
+                    <th>Follow-up</th>
+                    <th class="sortable" data-sort="created_at">Created <span class="sort-icon"></span></th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="leadsTableBody">
+                  <!-- Populated by leads.js -->
+                </tbody>
+              </table>
+
+              <!-- Loading Skeleton State -->
+              <div id="leadsLoadingState" class="table-loading-container hidden">
+                <div class="table-spinner"></div>
+                <div class="loading-text">Loading leads directory...</div>
+              </div>
+
+              <!-- Empty State -->
+              <div id="leadsEmptyState" class="table-empty-container hidden">
+                <div class="empty-icon-circle">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="18" y1="8" x2="23" y2="13"></line><line x1="23" y1="8" x2="18" y2="13"></line></svg>
+                </div>
+                <h3 class="empty-title">No customer leads found</h3>
+                <p class="empty-desc">No records match your active search and filter criteria. Adjust or reset your filters to see more leads.</p>
+                <button id="emptyResetBtn" class="btn-action-primary" style="margin-top: 1rem;">Reset Filters</button>
+              </div>
+
+              <!-- Error State -->
+              <div id="leadsErrorState" class="table-error-container hidden">
+                <div class="error-icon-circle">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
+                <h3 class="error-title">Unable to load leads</h3>
+                <p id="leadsErrorMessage" class="error-desc">A network or server error occurred while retrieving leads.</p>
+                <button id="leadsRetryBtn" class="btn-action-primary" style="margin-top: 1rem;">Retry</button>
+              </div>
+            </div>
+
+            <!-- Pagination Bar -->
+            <div id="leadsPaginationBar" class="pagination-bar">
+              <div class="pagination-info">
+                Showing <strong id="leadsRangeText">0-0</strong> of <strong id="leadsTotalCount">0</strong> leads
+              </div>
+
+              <div class="pagination-controls">
+                <div class="page-size-selector">
+                  <span>Rows:</span>
+                  <select id="leadsPageSizeSelect" class="page-size-select">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50" selected>50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
+
+                <div class="pagination-buttons">
+                  <button id="leadsPrevBtn" class="btn-page" title="Previous page" disabled>&larr; Prev</button>
+                  <span id="leadsCurrentPageBadge" class="page-badge">Page 1 of 1</span>
+                  <button id="leadsNextBtn" class="btn-page" title="Next page" disabled>Next &rarr;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. CAMPAIGNS CONTAINER (Active on /dashboard/campaigns) -->
+        <div id="campaignsContainer" class="campaigns-container hidden">
+          <!-- Campaigns Header -->
+          <div class="leads-view-header crm-page-header page-header">
+            <div class="crm-header-left page-header-left">
+              <div class="breadcrumb-bar">
+                <a href="/dashboard">Dashboard</a>
+                <span>/</span>
+                <span>Campaigns</span>
+              </div>
+              <h2 class="leads-view-title crm-header-title page-header-title">Campaigns</h2>
+              <p class="leads-view-desc crm-header-subtitle page-header-subtitle">Send WhatsApp broadcast campaigns to opted-in travelers in controlled batches of up to 50 and track approval status.</p>
+            </div>
+            <div class="leads-view-actions crm-header-actions page-header-actions">
+              <button id="syncMetaTemplatesHeaderBtn" class="btn-action-outline" title="Sync template statuses directly from Meta Graph API">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Sync Meta
+              </button>
+              <button id="openManageTemplatesModalBtn" class="btn-action-outline" title="Inspect WhatsApp templates and sync with Meta">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                Templates
+              </button>
+              <button id="openCreateTemplateModalBtn" class="btn-action-outline" title="Create and submit new Image+Text template" style="display: none;">
+                + New Template
+              </button>
+              <button id="openCreateCampaignModalBtn" class="btn-action-primary">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                + New Campaign
+              </button>
+            </div>
+          </div>
+
+          <!-- Filters Toolbar -->
+          <div class="leads-toolbar-card">
+            <div class="toolbar-search-wrapper">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="campaignSearchInput" class="toolbar-search-input" placeholder="Search campaigns by name or template..." autocomplete="off">
+            </div>
+
+            <div class="toolbar-filters-group">
+              <div class="filter-item">
+                <label for="campaignStatusFilter" class="filter-label">Campaign Status</label>
+                <select id="campaignStatusFilter" class="filter-select">
+                  <option value="">All Statuses</option>
+                  <option value="Draft">Draft</option>
+                  <option value="Scheduled">Scheduled</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+
+              <button id="resetCampaignFiltersBtn" class="btn-reset-filters" title="Reset all filters">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                Reset
+              </button>
+
+              <button type="button" id="refreshCampaignsBtn" class="btn-action-outline" title="Refresh campaign table" style="height: 36px; padding: 0 10px; border-radius: 8px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Campaigns Data Table Card -->
+          <div class="leads-table-card">
+            <div class="table-responsive">
+              <table id="campaignsTable" class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Campaign Name</th>
+                    <th>Status</th>
+                    <th>Template (Language)</th>
+                    <th>Eligible Recipients</th>
+                    <th>Batches</th>
+                    <th>Created</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="campaignsTableBody">
+                  <!-- Populated by campaigns.js -->
+                </tbody>
+              </table>
+
+              <!-- Loading State -->
+              <div id="campaignsLoadingState" class="table-state-loading hidden">
+                <div class="spinner"></div>
+                <p>Loading broadcast campaigns...</p>
+              </div>
+
+              <!-- Empty State -->
+              <div id="campaignsEmptyState" class="table-state-empty hidden" style="padding: 56px 24px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background: #F0FDFA; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                </div>
+                <h3 style="font-size: 15px; font-weight: 600; color: #0F172A; margin-bottom: 4px;">No campaigns yet</h3>
+                <p style="font-size: 13px; color: #64748B; margin: 0;">Create your first WhatsApp campaign to start reaching your opted-in travelers.</p>
+                <div style="margin-top: 1rem;">
+                  <button type="button" id="campaignsEmptyNewBtn" class="btn-action-primary">+ New Campaign</button>
+                </div>
+              </div>
+
+              <!-- Error State -->
+              <div id="campaignsErrorState" class="table-state-error hidden">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <h3>Failed to Load Campaigns</h3>
+                <p id="campaignsErrorText">A network or server error occurred.</p>
+              </div>
+            </div>
+
+            <!-- Pagination Bar -->
+            <div id="campaignsPaginationBar" class="table-pagination-bar">
+              <div class="pagination-info">
+                Showing <strong id="campaignsRangeText">0-0</strong> of <strong id="campaignsTotalCount">0</strong> campaigns
+              </div>
+
+              <div class="pagination-controls">
+                <div class="page-size-selector">
+                  <span>Rows:</span>
+                  <select id="campaignsPageSizeSelect" class="page-size-select">
+                    <option value="10">10</option>
+                    <option value="20" selected>20</option>
+                    <option value="50">50</option>
+                  </select>
+                </div>
+
+                <div class="pagination-buttons">
+                  <button id="campaignsPrevBtn" class="btn-page" title="Previous page" disabled>&larr; Prev</button>
+                  <span id="campaignsCurrentPageBadge" class="page-badge">Page 1 of 1</span>
+                  <button id="campaignsNextBtn" class="btn-page" title="Next page" disabled>Next &rarr;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. BATCH APPROVALS CONTAINER (Active on /dashboard/approvals) -->
+        <div id="approvalsContainer" class="approvals-container hidden">
+          <!-- Refined Sandbox Notice Banner -->
+          <div class="mock-mode-banner">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <div>
+              <strong>Sandbox Active:</strong> Outbound WhatsApp messages are safely simulated in mock mode. Live credentials required for Meta delivery.
+            </div>
+          </div>
+
+          <!-- Approvals Header -->
+          <div class="crm-page-header page-header">
+            <div class="crm-header-left page-header-left">
+              <div class="breadcrumb-bar">
+                <a href="/dashboard">Dashboard</a>
+                <span>/</span>
+                <span>Batch Approvals</span>
+              </div>
+              <h2 class="crm-header-title page-header-title">Batch Approval Workflow</h2>
+              <p class="crm-header-subtitle page-header-subtitle">Review and approve recipient batches (up to 50 contacts each) before dispatch.</p>
+            </div>
+            <div class="crm-header-actions page-header-actions">
+              <button id="refreshApprovalsBtn" class="btn-action-outline">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Refresh
+              </button>
+            </div>
+          </div>
+
+          <!-- Approvals Filter Tabs -->
+          <div class="approvals-tabs-bar">
+            <button class="approvals-tab-btn active" data-status="Pending">Pending Approval</button>
+            <button class="approvals-tab-btn" data-status="Approved">Approved</button>
+            <button class="approvals-tab-btn" data-status="Rejected">Rejected</button>
+            <button class="approvals-tab-btn" data-status="ALL">All Batches</button>
+          </div>
+
+          <!-- Batches Table Card -->
+          <div class="crm-card" style="overflow: hidden;">
+            <div class="table-responsive">
+              <table id="approvalsTable" class="data-table">
+                <thead>
+                  <tr>
+                    <th>Batch #</th>
+                    <th>Campaign & Template</th>
+                    <th>Batch Size</th>
+                    <th>Approval Status</th>
+                    <th>Send Status</th>
+                    <th>Dispatch Results</th>
+                    <th>Created</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="approvalsTableBody">
+                  <!-- Populated by approvals.js -->
+                </tbody>
+              </table>
+
+              <!-- Loading State -->
+              <div id="approvalsLoadingState" class="table-state-loading hidden">
+                <div class="spinner"></div>
+                <p>Loading recipient batches...</p>
+              </div>
+
+              <!-- Centered Empty State -->
+              <div id="approvalsEmptyState" class="table-state-empty hidden" style="padding: 56px 24px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background: #F1F5F9; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <h3 style="font-size: 15px; font-weight: 600; color: #0F172A; margin-bottom: 4px;">No Batches in this Queue</h3>
+                <p style="font-size: 13px; color: #64748B; margin: 0;">There are no batches currently matching the selected approval status filter.</p>
+              </div>
+
+              <!-- Error State -->
+              <div id="approvalsErrorState" class="table-state-error hidden" style="padding: 56px 24px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background: #FEE2E2; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
+                <h3 style="font-size: 15px; font-weight: 600; color: #0F172A; margin-bottom: 4px;">Failed to Load Batches</h3>
+                <p id="approvalsErrorText" style="font-size: 13px; color: #64748B; margin: 0;">A network or server error occurred.</p>
+              </div>
+            </div>
+
+            <!-- Pagination Bar -->
+            <div id="approvalsPaginationBar" class="table-pagination-bar">
+              <div class="pagination-info">
+                Showing <strong id="approvalsRangeText">0-0</strong> of <strong id="approvalsTotalCount">0</strong> batches
+              </div>
+
+              <div class="pagination-controls">
+                <div class="page-size-selector">
+                  <span>Rows:</span>
+                  <select id="approvalsPageSizeSelect" class="page-size-select">
+                    <option value="10">10</option>
+                    <option value="20" selected>20</option>
+                    <option value="50">50</option>
+                  </select>
+                </div>
+
+                <div class="pagination-buttons">
+                  <button id="approvalsPrevBtn" class="btn-page" title="Previous page" disabled>&larr; Prev</button>
+                  <span id="approvalsCurrentPageBadge" class="page-badge">Page 1 of 1</span>
+                  <button id="approvalsNextBtn" class="btn-page" title="Next page" disabled>Next &rarr;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. FOLLOW-UP SCHEDULES CONTAINER (Active on /dashboard/followups) -->
+        <div id="followupsContainer" class="followups-container hidden">
+          <div class="crm-page-header page-header">
+            <div class="crm-header-left page-header-left">
+              <div class="breadcrumb-bar">
+                <a href="/dashboard">Dashboard</a>
+                <span>/</span>
+                <span>Follow-up Schedules</span>
+              </div>
+              <h2 class="crm-header-title page-header-title">Follow-up Schedules</h2>
+              <p class="crm-header-subtitle page-header-subtitle">Track queued follow-ups and retry pending dispatches.</p>
+            </div>
+            <div class="crm-header-actions page-header-actions">
+              <button type="button" id="followupsRefreshBtn" class="btn-action-outline">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Refresh
+              </button>
+              <button type="button" id="followupsProcessDueBtn" class="btn-action-primary">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Process Due Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Unified Filter Toolbar Card -->
+          <div class="crm-card followups-filter-toolbar" style="display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; padding: 16px 20px; margin-bottom: 1.25rem;">
+            <div class="filter-group" style="display: flex; flex-direction: column; gap: 6px;">
+              <label for="followupsStatusFilter" class="filter-label" style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">FILTER STATUS</label>
+              <select id="followupsStatusFilter" class="form-select filter-select" style="height: 36px; min-width: 160px;">
+                <option value="">All Statuses</option>
+                <option value="Scheduled">Scheduled</option>
+                <option value="Approved">Approved</option>
+                <option value="Sent">Sent</option>
+                <option value="Skipped">Skipped</option>
+                <option value="Cancelled">Cancelled</option>
+                <option value="Failed">Failed</option>
+              </select>
+            </div>
+
+            <div class="filter-group" style="display: flex; flex-direction: column; gap: 6px;">
+              <label for="followupsLeadIdFilter" class="filter-label" style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">LEAD ID</label>
+              <input type="number" id="followupsLeadIdFilter" class="form-input filter-input" placeholder="e.g. 1" min="1" style="height: 36px; width: 120px;">
+            </div>
+
+            <button type="button" id="followupsFilterBtn" class="btn-action-primary btn-filter-apply" style="height: 36px; padding: 0 16px;">Apply Filters</button>
+            <button type="button" id="followupsResetBtn" class="btn-action-outline btn-filter-reset" style="height: 36px; padding: 0 16px;">Reset</button>
+          </div>
+
+          <!-- Structured Table Card & Centered Empty State -->
+          <div class="crm-card" style="overflow: hidden;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>LEAD</th>
+                    <th>SEQUENCE</th>
+                    <th>SCHEDULED FOR</th>
+                    <th>STATUS</th>
+                    <th>ATTEMPTS</th>
+                    <th>SKIP / REASON</th>
+                    <th>PROCESSED AT</th>
+                    <th class="text-right">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="followupsTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+
+              <!-- Loading State -->
+              <div id="followupsLoadingState" class="table-loading-overlay hidden">
+                <div class="spinner"></div>
+                <span>Loading follow-up schedules...</span>
+              </div>
+
+              <!-- Centered Empty State (inside table card, below headers) -->
+              <div id="followupsEmptyState" class="table-empty-state hidden" style="padding: 56px 24px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background: #F1F5F9; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <h3 style="font-size: 15px; font-weight: 600; color: #0F172A; margin-bottom: 4px;">No Schedules Found</h3>
+                <p style="font-size: 13px; color: #64748B; margin: 0;">There are currently no follow-up schedules matching your active filters.</p>
+              </div>
+
+              <!-- Error State -->
+              <div id="followupsErrorState" class="table-empty-state hidden" style="padding: 56px 24px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background: #FEE2E2; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
+                <h3 style="font-size: 15px; font-weight: 600; color: #0F172A; margin-bottom: 4px;">Failed to Load Follow-ups</h3>
+                <p id="followupsErrorText" style="font-size: 13px; color: #64748B; margin: 0;">An error occurred while fetching schedule records.</p>
+              </div>
+            </div>
+
+            <!-- Pagination Bar -->
+            <div id="followupsPaginationBar" class="table-pagination-bar">
+              <span id="followupsPaginationInfo" class="pagination-info">Showing <strong id="followupsRangeText">0-0</strong> of <strong id="followupsTotalCount">0</strong> schedules</span>
+              <div class="pagination-buttons">
+                <button type="button" id="followupsPrevBtn" class="btn-page" disabled>&larr; Prev</button>
+                <span id="followupsCurrentPageBadge" class="page-badge">Page 1 of 1</span>
+                <button type="button" id="followupsNextBtn" class="btn-page" disabled>Next &rarr;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. EXCEL & CSV SYNCHRONIZATION CONTAINER (Active on /dashboard/excel) -->
+        <div id="excelContainer" class="excel-container hidden">
+          <div class="crm-page-header page-header">
+            <div class="crm-header-left page-header-left">
+              <div class="breadcrumb-bar">
+                <a href="/dashboard">Dashboard</a>
+                <span>/</span>
+                <span>Excel Sync</span>
+              </div>
+              <h2 class="crm-header-title page-header-title">Excel & CSV Synchronization</h2>
+              <p class="crm-header-subtitle page-header-subtitle">Synchronize SQLite states with authorized workbooks, upload new customer batches, and inspect safety backups.</p>
+            </div>
+            <div class="crm-header-actions page-header-actions">
+              <button type="button" id="excelTriggerSyncBtn" class="btn-action-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                Sync Database to Workbook
+              </button>
+            </div>
+          </div>
+
+          <!-- 2-Column Storage Status Grid -->
+          <div class="two-col-grid">
+            <div class="crm-card" style="padding: 1.25rem 1.35rem;">
+              <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.75rem;">
+                <div>
+                  <span class="kpi-tile-label">Workbook Target Location</span>
+                  <div style="margin-top: 0.4rem;">
+                    <div class="code-path-pill">
+                      <span id="excelWorkbookPath">data/leads.xlsx</span>
+                      <button type="button" class="btn-copy-code" data-copy-target="excelWorkbookPath" title="Copy workbook path">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="icon-badge emerald">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line><line x1="10" y1="9" x2="10" y2="9.01"></line></svg>
+                </div>
+              </div>
+              <div id="excelSyncStatusText" class="kpi-tile-caption">Ready for bidirectional synchronization.</div>
+            </div>
+
+            <div class="crm-card" style="padding: 1.25rem 1.35rem;">
+              <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.75rem;">
+                <div>
+                  <span class="kpi-tile-label">Safety Backup Vault</span>
+                  <div style="margin-top: 0.4rem;">
+                    <div class="code-path-pill">
+                      <span id="excelBackupDir">data/backups</span>
+                      <button type="button" class="btn-copy-code" data-copy-target="excelBackupDir" title="Copy backup path">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="icon-badge blue">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="3" width="20" height="5" rx="1"></rect><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"></path><path d="M10 12h4"></path></svg>
+                </div>
+              </div>
+              <div class="kpi-tile-caption">Every synchronization creates an isolated pre-commit snapshot.</div>
+            </div>
+          </div>
+
+          <!-- Upload Drop Zone & Preview Card -->
+          <div class="crm-card" style="margin-bottom: 1.5rem;">
+            <div class="crm-card-header">
+              <div>
+                <h3 class="crm-card-title">Upload & Validate New Lead Workbook</h3>
+                <p class="crm-card-subtitle">Drag-and-drop or browse an Excel (.xlsx) or CSV (.csv) lead file for verification</p>
+              </div>
+              <span class="badge badge-active">Pre-Commit Verification</span>
+            </div>
+            <div class="crm-card-body">
+              <div id="excelDropZone" class="drop-zone-enhanced">
+                <div class="icon-badge indigo" style="width: 48px; height: 48px; border-radius: 12px;">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                </div>
+                <div style="font-weight: 600; font-size: 1rem; color: var(--text-main);">Drag & drop your Excel (.xlsx) or CSV (.csv) file here</div>
+                <div style="font-size: 0.825rem; color: var(--text-muted);">Supports standard lead columns (customer_name, phone_number, etc.)</div>
+                <input type="file" id="excelFileInput" accept=".xlsx,.csv" class="hidden">
+                <button type="button" class="btn-action-outline" style="margin-top: 0.25rem;" onclick="document.getElementById('excelFileInput').click()">Browse Files</button>
+                <div id="excelSelectedFileName" style="margin-top: 0.35rem; font-size: 0.825rem; font-weight: 500; color: var(--text-muted);">No file chosen</div>
+              </div>
+
+              <div id="excelPreviewLoading" class="table-loading-overlay hidden" style="margin-top: 1rem;">
+                <div class="spinner"></div>
+                <span>Validating rows and checking duplicates against SQLite database...</span>
+              </div>
+
+              <div id="excelPreviewError" class="form-alert error hidden" style="margin-top: 1rem;"></div>
+
+              <!-- Preview Diff Section -->
+              <div id="excelPreviewSection" class="hidden" style="margin-top: 1.5rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                  <h4 style="font-size: 1.05rem; font-weight: 600;">Pre-Commit Diff Summary</h4>
+                  <button type="button" id="excelConfirmImportBtn" class="btn-action-primary" disabled>
+                    Confirm & Import Eligible Leads
+                  </button>
+                </div>
+                <div class="dashboard-kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); margin-bottom: 1.25rem;">
+                  <div class="kpi-tile" style="padding: 0.85rem;">
+                    <span class="kpi-tile-label">Total Rows</span>
+                    <strong id="previewTotalRows" style="font-size: 1.4rem;">0</strong>
+                  </div>
+                  <div class="kpi-tile" style="padding: 0.85rem;">
+                    <span class="kpi-tile-label">Valid Syntax</span>
+                    <strong id="previewValidRows" style="font-size: 1.4rem; color: var(--success);">0</strong>
+                  </div>
+                  <div class="kpi-tile" style="padding: 0.85rem;">
+                    <span class="kpi-tile-label">New Eligible Leads</span>
+                    <strong id="previewNewLeads" style="font-size: 1.4rem; color: var(--primary);">0</strong>
+                  </div>
+                  <div class="kpi-tile" style="padding: 0.85rem;">
+                    <span class="kpi-tile-label">Existing in DB</span>
+                    <strong id="previewExistingLeads" style="font-size: 1.4rem; color: #64748b;">0</strong>
+                  </div>
+                  <div class="kpi-tile" style="padding: 0.85rem;">
+                    <span class="kpi-tile-label">Duplicates in File</span>
+                    <strong id="previewDuplicateRows" style="font-size: 1.4rem; color: var(--warning);">0</strong>
+                  </div>
+                  <div class="kpi-tile" style="padding: 0.85rem;">
+                    <span class="kpi-tile-label">Invalid Rows</span>
+                    <strong id="previewInvalidRows" style="font-size: 1.4rem; color: var(--danger);">0</strong>
+                  </div>
+                </div>
+
+                <!-- Error diagnostics if any -->
+                <div id="previewErrorsContainer" class="hidden" style="margin-bottom: 1.5rem;">
+                  <h5 style="color: var(--danger); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Row Validation Diagnostics</h5>
+                  <div class="table-responsive" style="max-height: 220px; overflow-y: auto;">
+                    <table class="data-table">
+                      <thead>
+                        <tr>
+                          <th>Row #</th>
+                          <th>Field</th>
+                          <th>Observed Value</th>
+                          <th>Error Code</th>
+                          <th>Details</th>
+                        </tr>
+                      </thead>
+                      <tbody id="previewErrorsTableBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- Eligible leads sample -->
+                <h5 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Eligible Leads Preview (First 25)</h5>
+                <div class="table-responsive" style="max-height: 260px; overflow-y: auto;">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Row #</th>
+                        <th>Serial</th>
+                        <th>Customer Name</th>
+                        <th>Phone Number</th>
+                      </tr>
+                    </thead>
+                    <tbody id="previewEligibleTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Automated Backups Card -->
+          <div class="crm-card">
+            <div class="crm-card-header">
+              <div>
+                <h3 class="crm-card-title">Safety Backup Archives</h3>
+                <p class="crm-card-subtitle">Timestamped snapshots generated automatically before database commits</p>
+              </div>
+              <button type="button" id="excelRefreshBackupsBtn" class="btn-action-outline">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Refresh Backups
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Backup Filename</th>
+                    <th>Full Storage Path</th>
+                    <th>File Size</th>
+                    <th>Generated At</th>
+                  </tr>
+                </thead>
+                <tbody id="excelBackupsTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. DELIVERY REPORTS & ANALYTICS CONTAINER (Active on /dashboard/reports) -->
+        <div id="reportsContainer" class="reports-container hidden">
+          <div class="crm-page-header page-header">
+            <div class="crm-header-left page-header-left">
+              <div class="breadcrumb-bar">
+                <a href="/dashboard">Dashboard</a>
+                <span>/</span>
+                <span>Delivery Reports</span>
+              </div>
+              <h2 class="crm-header-title page-header-title">Delivery Reports & Analytics</h2>
+              <p class="crm-header-subtitle page-header-subtitle">Real-time webhook delivery tracking, conversion metrics, batch audit states, and failed recipient logs.</p>
+            </div>
+            <div class="crm-header-actions page-header-actions">
+              <button type="button" id="reportsRefreshBtn" class="btn-action-outline">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Refresh Report
+              </button>
+            </div>
+          </div>
+
+          <!-- Top Control Bar Card -->
+          <div class="crm-card" style="margin-bottom: 1.5rem; padding: 1.25rem 1.5rem;">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
+              <div style="flex: 1; min-width: 280px; max-width: 480px;">
+                <label for="reportsCampaignSelect" class="kpi-tile-label" style="display: block; margin-bottom: 0.35rem;">Select Campaign to Inspect</label>
+                <div style="position: relative; display: flex; align-items: center;">
+                  <select id="reportsCampaignSelect" class="filter-select" style="width: 100%; height: 40px; font-size: 0.875rem;">
+                    <option value="">Loading campaigns...</option>
+                  </select>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="text-align: right;">
+                  <h4 id="reportCampaignName" style="font-size: 1.05rem; font-weight: 700; color: var(--text-main);">No Campaign Selected</h4>
+                  <small class="text-muted">Meta Cloud API Status</small>
+                </div>
+                <span id="reportCampaignStatus" class="badge">--</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Loading & Empty States -->
+          <div id="reportsLoadingState" class="table-loading-overlay hidden">
+            <div class="spinner"></div>
+            <span>Gathering message delivery analytics...</span>
+          </div>
+
+          <div id="reportsEmptyState" class="table-empty-state">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            <div class="empty-title">Select a Campaign</div>
+            <div id="reportsEmptyDesc" class="empty-desc">Choose a campaign from the selector above to inspect real-time delivery performance.</div>
+          </div>
+
+          <!-- Main Report Content -->
+          <div id="reportsContentSection" class="hidden">
+            <!-- 6-Card KPI Grid (3x2 Desktop) -->
+            <div class="kpi-grid kpi-grid-6">
+              <!-- Tile 1: Total Partitioned Recipients -->
+              <div class="kpi-tile">
+                <div class="kpi-tile-top">
+                  <span class="kpi-tile-label">Total Partitioned Recipients</span>
+                  <div class="icon-badge indigo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  </div>
+                </div>
+                <strong id="reportTotalRecipients" class="kpi-tile-value">0</strong>
+                <span class="kpi-tile-caption">All candidate leads assigned to batches</span>
+              </div>
+
+              <!-- Tile 2: Messages Sent (Dispatched) -->
+              <div class="kpi-tile">
+                <div class="kpi-tile-top">
+                  <span class="kpi-tile-label">Messages Sent (Dispatched)</span>
+                  <div class="icon-badge blue">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                  </div>
+                </div>
+                <strong id="reportSentCount" class="kpi-tile-value" style="color: var(--primary);">0</strong>
+                <span class="kpi-tile-caption">Dispatched to Meta Cloud API</span>
+              </div>
+
+              <!-- Tile 3: Messages Delivered -->
+              <div class="kpi-tile">
+                <div class="kpi-tile-top">
+                  <span class="kpi-tile-label">Messages Delivered</span>
+                  <div class="icon-badge emerald">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg>
+                  </div>
+                </div>
+                <strong id="reportDeliveredCount" class="kpi-tile-value" style="color: var(--success);">0</strong>
+                <span class="kpi-tile-caption">Verified via Meta delivery receipts</span>
+              </div>
+
+              <!-- Tile 4: Messages Read -->
+              <div class="kpi-tile">
+                <div class="kpi-tile-top">
+                  <span class="kpi-tile-label">Messages Read</span>
+                  <div class="icon-badge teal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                  </div>
+                </div>
+                <strong id="reportReadCount" class="kpi-tile-value" style="color: #0d9488;">0</strong>
+                <span class="kpi-tile-caption">Opened by customer in WhatsApp</span>
+              </div>
+
+              <!-- Tile 5: Dispatch Failures -->
+              <div class="kpi-tile">
+                <div class="kpi-tile-top">
+                  <span class="kpi-tile-label">Dispatch Failures</span>
+                  <div class="icon-badge rose">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                  </div>
+                </div>
+                <strong id="reportFailedCount" class="kpi-tile-value" style="color: var(--danger);">0</strong>
+                <span class="kpi-tile-caption">Undelivered or rejected by WhatsApp API</span>
+              </div>
+
+              <!-- Tile 6: Delivery Rate (%) -->
+              <div class="kpi-tile">
+                <div class="kpi-tile-top">
+                  <span class="kpi-tile-label">Delivery Rate</span>
+                  <div class="icon-badge amber">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                  </div>
+                </div>
+                <strong id="reportDeliveryRate" class="kpi-tile-value">0%</strong>
+                <div style="background: #e2e8f0; height: 6px; border-radius: 3px; margin-top: 0.35rem; overflow: hidden;">
+                  <div id="reportDeliveryProgressBar" style="background: var(--success); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                </div>
+                <span class="kpi-tile-caption">Ratio of delivered vs dispatched messages</span>
+              </div>
+            </div>
+
+            <!-- Batches Breakdown Strip Card -->
+            <div class="crm-card" style="margin-bottom: 1.5rem;">
+              <div class="crm-card-header">
+                <div>
+                  <h3 class="crm-card-title">Batch Lifecycle States</h3>
+                  <p class="crm-card-subtitle">Batches are partitioned at 50 recipients each for rate-limited dispatch</p>
+                </div>
+                <span class="badge badge-active">Auto Partitioning</span>
+              </div>
+              <div class="batch-strip">
+                <div class="batch-strip-item">
+                  <div class="batch-strip-indicator">
+                    <span class="batch-dot slate"></span>
+                    <span>Total Batches</span>
+                  </div>
+                  <strong id="reportBatchesTotal" class="batch-strip-count">0</strong>
+                </div>
+                <div class="batch-strip-item">
+                  <div class="batch-strip-indicator">
+                    <span class="batch-dot amber"></span>
+                    <span>Pending Approval</span>
+                  </div>
+                  <strong id="reportBatchesPending" class="batch-strip-count" style="color: var(--warning);">0</strong>
+                </div>
+                <div class="batch-strip-item">
+                  <div class="batch-strip-indicator">
+                    <span class="batch-dot blue"></span>
+                    <span>Approved</span>
+                  </div>
+                  <strong id="reportBatchesApproved" class="batch-strip-count" style="color: var(--primary);">0</strong>
+                </div>
+                <div class="batch-strip-item">
+                  <div class="batch-strip-indicator">
+                    <span class="batch-dot emerald"></span>
+                    <span>Dispatched (Sent)</span>
+                  </div>
+                  <strong id="reportBatchesSent" class="batch-strip-count" style="color: var(--success);">0</strong>
+                </div>
+                <div class="batch-strip-item">
+                  <div class="batch-strip-indicator">
+                    <span class="batch-dot rose"></span>
+                    <span>Rejected</span>
+                  </div>
+                  <strong id="reportBatchesRejected" class="batch-strip-count" style="color: var(--danger);">0</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Failed Recipients Audit Table Card -->
+            <div class="crm-card">
+              <div class="crm-card-header">
+                <div>
+                  <h3 class="crm-card-title">Failed Recipient Audit Log</h3>
+                  <p class="crm-card-subtitle">Exhaustive log of undelivered numbers and upstream API failure diagnostics</p>
+                </div>
+                <span class="badge badge-failed">Non-Delivered Dispatches</span>
+              </div>
+              <div id="reportFailedEmpty" class="table-empty-state" style="padding: 2.5rem 1.5rem;">
+                <div class="icon-badge emerald" style="width: 52px; height: 52px; border-radius: 50%; margin: 0 auto 0.75rem;">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <div class="empty-title" style="color: var(--success); font-size: 1.15rem;">Zero Failed Recipients</div>
+                <div class="empty-desc">All attempted messages for this campaign were successfully accepted or delivered.</div>
+              </div>
+              <div id="reportFailedTableContainer" class="table-responsive hidden">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Batch</th>
+                      <th>Customer Name</th>
+                      <th>Phone Number</th>
+                      <th>Failure Reason / API Diagnostic</th>
+                      <th>Timestamp</th>
+                    </tr>
+                  </thead>
+                  <tbody id="reportFailedTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. APPLICATION & SECURITY SETTINGS CONTAINER (Active on /dashboard/settings) -->
+        <div id="settingsContainer" class="settings-container hidden">
+          <div class="crm-page-header page-header">
+            <div class="crm-header-left page-header-left">
+              <div class="breadcrumb-bar">
+                <a href="/dashboard">Dashboard</a>
+                <span>/</span>
+                <span>Settings</span>
+              </div>
+              <h2 class="crm-header-title page-header-title">Application & Security Settings</h2>
+              <p class="crm-header-subtitle page-header-subtitle">Manage admin account access, password rotation, and workspace security.</p>
+            </div>
+            <div class="crm-header-actions page-header-actions">
+              <button type="button" id="settingsRefreshBtn" class="btn-action-outline">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Refresh Diagnostics
+              </button>
+            </div>
+          </div>
+
+          <div class="settings-two-col">
+            <!-- Column 1: Security & Credentials -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <!-- User Profile Card -->
+              <div class="crm-card">
+                <div class="crm-card-header">
+                  <h3 class="crm-card-title">Administrator Account</h3>
+                  <span id="settingsRoleBadge" class="badge badge-active">ADMIN</span>
+                </div>
+                <div class="crm-card-body">
+                  <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
+                    <div class="avatar-circle-gradient">A</div>
+                    <div>
+                      <div id="settingsUsername" style="font-weight: 700; font-size: 1.15rem; color: var(--text-main);">admin</div>
+                      <small class="text-muted"><span id="settingsUserRoleText">Active Administrator</span></small>
+                      <span id="settingsUserId" style="display: none;">1</span>
+                    </div>
+                  </div>
+                  <div class="audit-notice">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>Protected with secure session management and CSRF protection.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Change Password Form -->
+              <div class="crm-card">
+                <div class="crm-card-header">
+                  <div>
+                    <h3 class="crm-card-title">Update Password</h3>
+                    <p class="crm-card-subtitle">Enforce security rotation for administrator account</p>
+                  </div>
+                  <div class="icon-badge indigo" style="width: 34px; height: 34px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  </div>
+                </div>
+                <div class="crm-card-body">
+                  <form id="changePasswordForm">
+                    <div id="settingsPasswordAlert" class="form-alert error hidden" style="margin-bottom: 1rem;"></div>
+
+                    <div class="form-group">
+                      <label for="settingsCurrentPassword" class="form-label">Current Password <span class="required">*</span></label>
+                      <div class="password-input-group">
+                        <input type="password" id="settingsCurrentPassword" class="form-input" autocomplete="current-password" required>
+                        <button type="button" id="toggleCurrentPwdBtn" class="btn-toggle-password" title="Show/Hide password">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="settingsNewPassword" class="form-label">New Password <span class="required">*</span></label>
+                      <div class="password-input-group">
+                        <input type="password" id="settingsNewPassword" class="form-input" autocomplete="new-password" minlength="8" required>
+                        <button type="button" id="toggleNewPwdBtn" class="btn-toggle-password" title="Show/Hide password">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                      </div>
+                      <!-- Live Password Strength Meter -->
+                      <div class="password-strength-wrapper">
+                        <div class="password-strength-track">
+                          <div id="passwordStrengthBar" class="password-strength-fill"></div>
+                        </div>
+                        <span id="passwordStrengthText" class="password-strength-text">Minimum 8 characters with letters, numbers & symbols</span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="settingsConfirmPassword" class="form-label">Confirm New Password <span class="required">*</span></label>
+                      <div class="password-input-group">
+                        <input type="password" id="settingsConfirmPassword" class="form-input" autocomplete="new-password" minlength="8" required>
+                        <button type="button" id="toggleConfirmPwdBtn" class="btn-toggle-password" title="Show/Hide password">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                      </div>
+                      <div id="passwordMatchIndicator" class="password-match-badge hidden"></div>
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end; margin-top: 1.25rem;">
+                      <button type="submit" id="settingsChangePasswordBtn" class="btn-action-primary">
+                        Change Password
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: Runtime & Integration Diagnostics -->
+            <div>
+              <div class="crm-card">
+                <div class="crm-card-header">
+                  <div>
+                    <h3 class="crm-card-title">System & Integration Status</h3>
+                    <p class="crm-card-subtitle">Real-time status of backend schedulers, messaging engines, and database targets</p>
+                  </div>
+                  <span class="badge badge-active">Live Configuration</span>
+                </div>
+                <div class="crm-card-body">
+                  <div style="display: flex; flex-direction: column;">
+                    <!-- Row 1: APScheduler -->
+                    <div class="diagnostic-row">
+                      <div class="diagnostic-left">
+                        <div class="icon-badge indigo">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </div>
+                        <div>
+                          <strong style="color: var(--text-main);">Background Scheduler (APScheduler)</strong>
+                          <div class="text-muted" style="font-size: 0.8rem;">Automated follow-up checks running at configured intervals.</div>
+                        </div>
+                      </div>
+                      <span id="settingsSchedulerTag" class="health-status-tag active">ACTIVE</span>
+                    </div>
+
+                    <!-- Row 2: WhatsApp Cloud Integration -->
+                    <div class="diagnostic-row">
+                      <div class="diagnostic-left">
+                        <div class="icon-badge emerald">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        </div>
+                        <div>
+                          <strong style="color: var(--text-main);">WhatsApp Cloud Integration</strong>
+                          <div id="settingsWhatsAppSubtitle" class="text-muted" style="font-size: 0.8rem;">Mock dispatcher mode ensures safe offline development until credentials are set.</div>
+                        </div>
+                      </div>
+                      <span id="settingsWhatsAppTag" class="health-status-tag inactive">OFFLINE (MOCK)</span>
+                    </div>
+
+                    <!-- Row 3: Meta Webhook Security -->
+                    <div class="diagnostic-row">
+                      <div class="diagnostic-left">
+                        <div class="icon-badge blue">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </div>
+                        <div>
+                          <strong style="color: var(--text-main);">Meta Webhook Security</strong>
+                          <div class="text-muted" style="font-size: 0.8rem;">Incoming callbacks validated via SHA-256 HMAC signature.</div>
+                        </div>
+                      </div>
+                      <span class="badge badge-delivered">SHA-256 HMAC Verified</span>
+                    </div>
+
+                    <!-- Row 4: Primary Lead Database -->
+                    <div class="diagnostic-row">
+                      <div class="diagnostic-left">
+                        <div class="icon-badge slate">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                        </div>
+                        <div>
+                          <strong style="color: var(--text-main);">Primary Lead Database</strong>
+                          <div class="text-muted" style="font-size: 0.8rem;">SQLite WAL mode with SQLAlchemy 2.0 and Alembic migrations.</div>
+                        </div>
+                      </div>
+                      <code style="font-size: 0.775rem; background: #f8fafc; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border); font-family: monospace;">travel_agency.db</code>
+                    </div>
+
+                    <!-- Row 5: Authentication Cryptography -->
+                    <div class="diagnostic-row">
+                      <div class="diagnostic-left">
+                        <div class="icon-badge slate">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        </div>
+                        <div>
+                          <strong style="color: var(--text-main);">Password Cryptography</strong>
+                          <div class="text-muted" style="font-size: 0.8rem;">PBKDF2-HMAC-SHA256 with 600,000 hashing rounds.</div>
+                        </div>
+                      </div>
+                      <span class="badge badge-delivered">PBKDF2-SHA256</span>
+                    </div>
+
+                    <!-- Row 6: Excel Synchronization Target -->
+                    <div class="diagnostic-row">
+                      <div class="diagnostic-left">
+                        <div class="icon-badge emerald">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line><line x1="10" y1="9" x2="10" y2="9.01"></line></svg>
+                        </div>
+                        <div>
+                          <strong style="color: var(--text-main);">Excel Synchronization Target</strong>
+                          <div class="text-muted" style="font-size: 0.8rem;">Standard workbook path for agency agent import & backup.</div>
+                        </div>
+                      </div>
+                      <code style="font-size: 0.775rem; background: #f8fafc; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border); font-family: monospace;">data/leads.xlsx</code>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. MODULE PLACEHOLDER CONTAINER (Active on /dashboard/{module}) -->
+        <div id="placeholderContainer" class="placeholder-container hidden">
+          <div class="breadcrumb-bar">
+            <a href="/dashboard">Dashboard</a>
+            <span>/</span>
+            <span id="breadcrumbModule">Module</span>
+          </div>
+
+          <div class="placeholder-card">
+            <div id="placeholderIcon" class="placeholder-icon-circle">
+              <!-- Rendered via JS -->
+            </div>
+            <div id="placeholderPhaseBadge" class="placeholder-phase-badge">Phase Scope</div>
+            <h2 id="placeholderTitle" class="placeholder-title">Module Name</h2>
+            <p id="placeholderSubtitle" class="placeholder-desc">Module description text.</p>
+
+            <div class="placeholder-api-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              <span>Backend REST API active at: <code id="placeholderEndpoint">/api/...</code></span>
+            </div>
+
+            <div class="placeholder-actions">
+              <a href="/dashboard" class="btn-primary">Return to Overview</a>
+              <a href="/docs" target="_blank" class="btn-secondary">Explore API Docs</a>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+
+  <!-- 1. Lead Details Modal -->
+  <div id="leadDetailModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="detailModalTitle">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3 id="detailModalTitle" class="modal-title">Customer Lead Details</h3>
+          <p id="detailModalSubtitle" class="modal-subtitle">Full contact profile, consent audit trail, and communication history.</p>
+        </div>
+        <button type="button" id="closeDetailModalBtn" class="modal-close-btn" data-dismiss="modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <!-- Quick Badges Bar -->
+      <div class="detail-badges-bar">
+        <span id="detailStatusBadge" class="badge">--</span>
+        <span id="detailConsentBadge" class="badge">--</span>
+        <span id="detailFollowupBadge" class="badge">--</span>
+      </div>
+
+      <!-- Modal Tabs Navigation -->
+      <div class="modal-tabs">
+        <button class="modal-tab-btn active" data-tab="tabProfile">Profile & Consent Audit</button>
+        <button class="modal-tab-btn" data-tab="tabSchedules">Follow-up Schedules (<span id="tabSchedulesCount">0</span>)</button>
+        <button class="modal-tab-btn" data-tab="tabHistory">Interaction History (<span id="tabHistoryCount">0</span>)</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Tab 1: Profile & Consent Audit -->
+        <div id="tabProfile" class="modal-tab-content active">
+          <div class="detail-section-title">Lead Attributes</div>
+          <div class="profile-grid">
+            <div class="profile-field">
+              <span class="field-label">Customer Name</span>
+              <strong id="detailCustomerName" class="field-value">--</strong>
+            </div>
+            <div class="profile-field">
+              <span class="field-label">Phone Number</span>
+              <strong id="detailPhoneNumber" class="field-value">--</strong>
+            </div>
+            <div class="profile-field">
+              <span class="field-label">Serial Number</span>
+              <span id="detailSerialNumber" class="field-value">--</span>
+            </div>
+            <div class="profile-field">
+              <span class="field-label">Lead ID</span>
+              <span id="detailLeadId" class="field-value">--</span>
+            </div>
+            <div class="profile-field">
+              <span class="field-label">Created At (UTC)</span>
+              <span id="detailCreatedAt" class="field-value">--</span>
+            </div>
+            <div class="profile-field">
+              <span class="field-label">Last Updated (UTC)</span>
+              <span id="detailUpdatedAt" class="field-value">--</span>
+            </div>
+          </div>
+
+          <div class="detail-section-title" style="margin-top: 1.5rem;">WhatsApp Messaging Consent & Compliance</div>
+          <div class="consent-audit-card">
+            <div class="audit-row">
+              <span class="audit-label">Consent Status:</span>
+              <strong id="detailConsentStatus" class="audit-value">--</strong>
+            </div>
+            <div class="audit-row">
+              <span class="audit-label">Verifiable Source:</span>
+              <span id="detailConsentSource" class="audit-value">--</span>
+            </div>
+            <div class="audit-row">
+              <span class="audit-label">Opt-in Timestamp:</span>
+              <span id="detailOptInTime" class="audit-value">--</span>
+            </div>
+            <div class="audit-row">
+              <span class="audit-label">Opt-out Timestamp:</span>
+              <span id="detailOptOutTime" class="audit-value">--</span>
+            </div>
+            <div class="audit-notice">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              <span>Meta Policy: WhatsApp template messaging requires explicit affirmative opt-in. Consent is never inferred from customer inquiries, purchases, or imported spreadsheets.</span>
+            </div>
+          </div>
+
+          <div class="detail-section-title" style="margin-top: 1.5rem;">Inbound WhatsApp Reply &amp; Follow-up Call Status</div>
+          <div class="consent-audit-card">
+            <div class="audit-row">
+              <span class="audit-label">Latest WhatsApp Reply:</span>
+              <strong id="detailLastReplyText" class="audit-value">--</strong>
+            </div>
+            <div class="audit-row">
+              <span class="audit-label">Replied At (IST):</span>
+              <span id="detailLastRepliedAt" class="audit-value">--</span>
+            </div>
+            <div class="audit-row">
+              <span class="audit-label">Call Queue Status:</span>
+              <span id="detailCallQueueStatus" class="audit-value">--</span>
+            </div>
+            <div class="audit-row">
+              <span class="audit-label">Follow-up Call Notes:</span>
+              <span id="detailFollowupNotes" class="audit-value">--</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Follow-up Schedules -->
+        <div id="tabSchedules" class="modal-tab-content">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Seq #</th>
+                  <th>Scheduled At (UTC)</th>
+                  <th>Attempt</th>
+                  <th>Status</th>
+                  <th>Skip Reason</th>
+                  <th>Processed At</th>
+                </tr>
+              </thead>
+              <tbody id="detailSchedulesTableBody">
+                <!-- Populated via leads.js -->
+              </tbody>
+            </table>
+            <div id="detailSchedulesEmpty" class="tab-empty-state hidden">
+              No individual follow-up schedules created for this lead.
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Customer Interaction & Message History -->
+        <div id="tabHistory" class="modal-tab-content">
+          <div class="history-subheading">Outbound WhatsApp Message Logs</div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Type / Template</th>
+                  <th>Delivery Status</th>
+                  <th>WhatsApp Message ID</th>
+                  <th>Sent At</th>
+                  <th>Delivered At</th>
+                  <th>Read At</th>
+                  <th>Failed At</th>
+                  <th>Error Details</th>
+                </tr>
+              </thead>
+              <tbody id="detailOutboundTableBody">
+                <!-- Populated via leads.js -->
+              </tbody>
+            </table>
+            <div id="detailOutboundEmpty" class="tab-empty-state hidden">No outbound WhatsApp messages dispatched to this customer.</div>
+          </div>
+
+          <div class="history-subheading" style="margin-top: 1.5rem;">Inbound Customer Messages (Webhooks)</div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Received At (UTC)</th>
+                  <th>Message Text</th>
+                  <th>Processing Status</th>
+                  <th>WhatsApp Message ID</th>
+                </tr>
+              </thead>
+              <tbody id="detailInboundTableBody">
+                <!-- Populated via leads.js -->
+              </tbody>
+            </table>
+            <div id="detailInboundEmpty" class="tab-empty-state hidden">No inbound customer messages recorded.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="modal-footer-left">
+          <button id="detailMarkCalledBtn" class="btn-action-call hidden" title="Log Follow-up Call">Mark as Called</button>
+          <button id="detailQuickEditBtn" class="btn-action-outline">Edit Lead</button>
+          <button id="detailQuickConsentBtn" class="btn-action-outline">Update Consent</button>
+          <button id="detailQuickPauseBtn" class="btn-action-outline">Pause Follow-ups</button>
+        </div>
+        <button type="button" id="closeDetailModalBottomBtn" class="btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Lead Edit Modal -->
+  <div id="leadEditModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 id="editModalTitle" class="modal-title">Edit Customer Lead</h3>
+          <p class="modal-subtitle">Modify contact details and lead status with backend validation.</p>
+        </div>
+        <button type="button" id="closeEditModalBtn" class="modal-close-btn" data-dismiss="modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <form id="editLeadForm">
+        <input type="hidden" id="editLeadId">
+        <div class="modal-body">
+          <div id="editLeadError" class="form-alert error hidden"></div>
+
+          <div class="form-group">
+            <label for="editCustomerName" class="form-label">Customer Name <span class="required">*</span></label>
+            <input type="text" id="editCustomerName" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="editPhoneNumber" class="form-label">Phone Number <span class="required">*</span></label>
+            <input type="text" id="editPhoneNumber" class="form-input" placeholder="+91..." required>
+            <small class="form-hint">E.164 format with country code (e.g., +919876543210).</small>
+          </div>
+
+          <div class="form-group">
+            <label for="editSerialNumber" class="form-label">Serial Number</label>
+            <input type="text" id="editSerialNumber" class="form-input" placeholder="e.g. LEAD-042">
+          </div>
+
+          <div class="form-group">
+            <label for="editLeadStatus" class="form-label">Lead Status <span class="required">*</span></label>
+            <select id="editLeadStatus" class="form-select" required>
+              <option value="Pending">Pending</option>
+              <option value="Replied">Replied</option>
+              <option value="Not Interested">Not Interested</option>
+            </select>
+            <small class="form-hint">Note: Changing status to "Not Interested" automatically cancels future scheduled follow-ups.</small>
+          </div>
+
+          <div class="form-checkbox-group">
+            <label class="checkbox-container">
+              <input type="checkbox" id="editFollowupPaused">
+              <span class="checkmark"></span>
+              <span class="checkbox-label">Pause automated follow-ups for this customer</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelEditModalBtn" class="btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" id="saveEditLeadBtn" class="btn-action-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Consent Management Modal -->
+  <div id="leadConsentModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="consentModalTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 id="consentModalTitle" class="modal-title">Manage WhatsApp Consent</h3>
+          <p id="consentModalSubtitle" class="modal-subtitle">Document affirmative customer opt-in or suppression.</p>
+        </div>
+        <button type="button" id="closeConsentModalBtn" class="modal-close-btn" data-dismiss="modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <form id="consentForm">
+        <input type="hidden" id="consentLeadId">
+        <div class="modal-body">
+          <div id="consentError" class="form-alert error hidden"></div>
+
+          <div class="consent-target-info">
+            <div>Customer: <strong id="consentCustomerName">--</strong></div>
+            <div>Phone: <span id="consentCustomerPhone">--</span></div>
+            <div>Current: <span id="consentCurrentBadge" class="badge">--</span></div>
+          </div>
+
+          <div class="form-group">
+            <label for="consentStatusSelect" class="form-label">New Consent Status <span class="required">*</span></label>
+            <select id="consentStatusSelect" class="form-select" required>
+              <option value="OPTED_IN">OPTED_IN — Customer provided explicit consent</option>
+              <option value="NOT_OPTED_IN">NOT_OPTED_IN — Unverified / Consent pending</option>
+              <option value="OPTED_OUT">OPTED_OUT — Customer opted out / Suppressed</option>
+            </select>
+          </div>
+
+          <div id="consentSourceGroup" class="form-group">
+            <label for="consentSourceInput" class="form-label">Verifiable Consent Source <span class="required">*</span></label>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <select id="consentSourceQuickSelect" class="form-select">
+                <option value="">-- Choose Common Source --</option>
+                <option value="website_form">Website Inquiry Form</option>
+                <option value="inbound_whatsapp">Inbound WhatsApp Message ("Hi/Interested")</option>
+                <option value="verbal_inquiry">Direct Verbal / Phone Consent</option>
+                <option value="written_agreement">Signed Booking Form / Agreement</option>
+                <option value="qr_code_scan">QR Code Campaign Scan</option>
+                <option value="custom">Other / Custom</option>
+              </select>
+            </div>
+            <input type="text" id="consentSourceInput" class="form-input" placeholder="Specify verifiable source (e.g. website_booking_page_v2)" required>
+            <small class="form-hint">Mandatory for OPTED_IN. Documents the explicit action taken by the customer.</small>
+          </div>
+
+          <div class="audit-notice">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>Anti-spam rule: Marking OPTED_OUT immediately suppresses this lead from broadcast campaigns. Consent must never be inferred or auto-converted.</span>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelConsentModalBtn" class="btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" id="saveConsentBtn" class="btn-action-primary">Update Consent</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Add Lead Modal -->
+  <div id="leadCreateModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="createModalTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 id="createModalTitle" class="modal-title">Add Customer Lead</h3>
+          <p class="modal-subtitle">Manually register a new prospect into the CRM directory.</p>
+        </div>
+        <button type="button" id="closeCreateModalBtn" class="modal-close-btn" data-dismiss="modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <form id="createLeadForm">
+        <div class="modal-body">
+          <div id="createLeadError" class="form-alert error hidden"></div>
+
+          <div class="form-group">
+            <label for="createCustomerName" class="form-label">Customer Name <span class="required">*</span></label>
+            <input type="text" id="createCustomerName" class="form-input" placeholder="e.g. Ananya Roy" required>
+          </div>
+
+          <div class="form-group">
+            <label for="createPhoneNumber" class="form-label">Phone Number <span class="required">*</span></label>
+            <input type="text" id="createPhoneNumber" class="form-input" placeholder="+919876543210" required>
+            <small class="form-hint">Must include country code.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="createSerialNumber" class="form-label">Serial Number</label>
+            <input type="text" id="createSerialNumber" class="form-input" placeholder="e.g. LEAD-099">
+          </div>
+
+          <div class="form-group">
+            <label for="createLeadStatus" class="form-label">Initial Status</label>
+            <select id="createLeadStatus" class="form-select">
+              <option value="Pending" selected>Pending</option>
+              <option value="Replied">Replied</option>
+              <option value="Not Interested">Not Interested</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="createConsentStatus" class="form-label">WhatsApp Consent Status</label>
+            <select id="createConsentStatus" class="form-select">
+              <option value="NOT_OPTED_IN" selected>NOT_OPTED_IN (Unverified)</option>
+              <option value="OPTED_IN">OPTED_IN (Explicit Affirmative Consent)</option>
+              <option value="OPTED_OUT">OPTED_OUT (Suppressed)</option>
+            </select>
+          </div>
+
+          <div id="createConsentSourceGroup" class="form-group hidden">
+            <label for="createConsentSource" class="form-label">Consent Source <span class="required">*</span></label>
+            <input type="text" id="createConsentSource" class="form-input" placeholder="e.g. website_form, inquiry_call">
+          </div>
+
+          <div class="form-checkbox-group">
+            <label class="checkbox-container">
+              <input type="checkbox" id="createFollowupPaused">
+              <span class="checkmark"></span>
+              <span class="checkbox-label">Pause automated follow-ups initially</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelCreateModalBtn" class="btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" id="saveCreateLeadBtn" class="btn-action-primary">Create Lead</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. Create Campaign Modal -->
+  <div id="campaignCreateModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="createCampaignTitle">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3 id="createCampaignTitle" class="modal-title">Create Broadcast Campaign</h3>
+          <p class="modal-subtitle">Configure targeting, template preview, batch partitions, and automated scheduling.</p>
+        </div>
+        <button type="button" id="closeCreateCampaignModalBtn" class="modal-close-btn" data-dismiss="modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <form id="createCampaignForm">
+        <div class="modal-body">
+          <div id="createCampaignError" class="form-alert error hidden"></div>
+
+          <!-- Eligibility Summary Box -->
+          <div class="campaign-eligibility-box">
+            <div class="eligibility-title">Candidate Recipient Audit</div>
+            <div class="eligibility-stats-row">
+              <div>Eligible (OPTED_IN): <strong id="createEligibleCount" style="color: var(--success);">--</strong></div>
+              <div>Excluded / Ineligible: <strong id="createExcludedCount" style="color: var(--danger);">--</strong></div>
+              <div>Total Leads: <strong id="createTotalCount">--</strong></div>
+            </div>
+            <small class="eligibility-hint">Anti-spam guard: Only OPTED_IN leads with valid phone numbers and active follow-up status are partitioned. Leads marked NOT_OPTED_IN, OPTED_OUT, or Not Interested are automatically excluded.</small>
+          </div>
+
+          <!-- Campaign Name -->
+          <div class="form-group">
+            <label for="createCampaignName" class="form-label">Campaign Name <span class="required">*</span></label>
+            <input type="text" id="createCampaignName" class="form-input" placeholder="e.g. Goa Monsoon Special 2026" required>
+          </div>
+
+          <!-- WhatsApp Template Selection -->
+          <div class="form-group">
+            <label for="createTemplateSelect" class="form-label">WhatsApp Template <span class="required">*</span></label>
+            <select id="createTemplateSelect" class="form-select" required>
+              <option value="">Loading templates...</option>
+            </select>
+            <small class="form-hint">Approved WhatsApp message templates from Meta Cloud API or local database.</small>
+          </div>
+
+          <!-- Template Preview Card (Task 4.3) -->
+          <div id="createTemplatePreviewBox" class="template-preview-box hidden">
+            <div class="template-preview-header">
+              <span id="previewTemplateCategory" class="template-badge">MARKETING</span>
+              <span id="previewTemplateLang" class="template-badge template-badge-lang">Language: en</span>
+            </div>
+            <div id="previewHeaderSection" class="hidden" style="margin-bottom: 0.4rem; font-weight: 600; font-size: 0.8rem; color: #1e293b;">
+              Header: <span id="previewHeaderText"></span>
+            </div>
+            <div id="templatePreviewBody" class="template-preview-body"></div>
+            <div id="templatePreviewVars" class="template-preview-vars"></div>
+          </div>
+
+          <input type="hidden" id="createTemplateLanguage" value="en">
+
+          <!-- 1. Targeting Controls: To Whom (Task 4.1) -->
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="form-label">Recipient Targeting <span class="required">*</span></label>
+            <div class="targeting-mode-group">
+              <label class="targeting-radio-card active" id="cardTargetAll">
+                <input type="radio" name="recipientTargetingMode" id="targetModeAll" value="all" checked>
+                <div class="radio-content">
+                  <span class="radio-title">All Eligible Leads</span>
+                  <span class="radio-desc">Partition all consented OPTED_IN leads automatically</span>
+                </div>
+              </label>
+              <label class="targeting-radio-card" id="cardTargetSpecific">
+                <input type="radio" name="recipientTargetingMode" id="targetModeSpecific" value="specific">
+                <div class="radio-content">
+                  <span class="radio-title">Select Specific Leads</span>
+                  <span class="radio-desc">Choose candidate recipients from a searchable checklist</span>
+                </div>
+              </label>
+            </div>
+
+            <!-- Specific Leads Searchable Checklist Container -->
+            <div id="specificLeadsContainer" class="specific-leads-box hidden">
+              <div class="specific-leads-toolbar">
+                <input type="text" id="specificLeadsSearch" class="specific-leads-search" placeholder="Filter by customer name, phone, or destination..." autocomplete="off">
+                <div class="specific-leads-actions">
+                  <button type="button" id="selectAllSpecificLeadsBtn" class="btn-xs">Select All</button>
+                  <button type="button" id="deselectAllSpecificLeadsBtn" class="btn-xs">Deselect All</button>
+                </div>
+              </div>
+              <div id="specificLeadsList" class="specific-leads-list">
+                <div style="padding: 1rem; text-align: center; color: var(--text-muted); font-size: 0.8rem;">Loading eligible leads...</div>
+              </div>
+              <div class="specific-leads-count-bar">
+                <span>Selected: <strong id="specificLeadsSelectedCount" style="color: var(--primary);">0</strong> leads</span>
+                <span id="specificLeadsTotalAvailable">Available: 0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Limits: How Many (Task 4.2) & Batch Carry-Forward (Task 2) -->
+          <div class="form-row-2col">
+            <div class="form-group">
+              <label for="createMaxRecipients" class="form-label">Total Recipients Limit (Optional)</label>
+              <input type="number" id="createMaxRecipients" class="form-input" placeholder="All eligible (no cap)" min="1">
+              <small class="form-hint">Cap on total recipients to message. Omit to target all selected.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="createBatchSize" class="form-label">Contacts Per Batch ("Send at Once") <span class="required">*</span></label>
+              <input type="number" id="createBatchSize" class="form-input" value="50" min="1" max="50" required>
+              <small class="form-hint">Recipients per approval batch (up to 50 max).</small>
+            </div>
+          </div>
+
+          <!-- Carry-Forward Interval & Live Plan Preview (Task 2) -->
+          <div class="form-group">
+            <label for="createCarryForwardInterval" class="form-label">Automatic Batch Carry-Forward Interval</label>
+            <select id="createCarryForwardInterval" class="form-select">
+              <option value="0" selected>All at once (All batches scheduled for same time)</option>
+              <option value="2">Every 2 hours</option>
+              <option value="6">Every 6 hours</option>
+              <option value="12">Every 12 hours</option>
+              <option value="24">Daily carry-forward (Every 24 hours)</option>
+            </select>
+            <small class="form-hint">Stagger subsequent approved batches automatically so you don't exhaust limits.</small>
+          </div>
+
+          <!-- Live Batch Plan Preview -->
+          <div id="createBatchPlanPreview" class="batch-plan-preview-box">
+            <div class="plan-preview-title">Live Batch Plan Preview</div>
+            <div id="batchPlanPreviewText" class="plan-preview-text">Evaluating candidate recipients...</div>
+          </div>
+
+          <!-- 3. Scheduling Controls: When (Task 4.4) -->
+          <div class="form-group" style="margin-top: 0.5rem;">
+            <label class="form-label">Dispatch Mode <span class="required">*</span></label>
+            <div class="send-mode-group">
+              <label class="send-mode-card active" id="cardSendImmediate">
+                <input type="radio" name="campaignSendMode" id="sendModeImmediate" value="immediate" checked>
+                <div class="radio-content">
+                  <span class="radio-title">Send Immediately</span>
+                  <span class="radio-desc">Batches become ready for dispatch immediately upon approval</span>
+                </div>
+              </label>
+              <label class="send-mode-card" id="cardSendScheduled">
+                <input type="radio" name="campaignSendMode" id="sendModeScheduled" value="scheduled">
+                <div class="radio-content">
+                  <span class="radio-title">Schedule for Later</span>
+                  <span class="radio-desc">Automated APScheduler dispatch at selected future time</span>
+                </div>
+              </label>
+            </div>
+
+            <div id="campaignScheduleDateTimeGroup" class="form-group hidden" style="background: #f8fafc; padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+              <label for="createScheduledAt" class="form-label">Scheduled Date & Time <span class="required">*</span></label>
+              <input type="datetime-local" id="createScheduledAt" class="form-input">
+              <small class="form-hint">Once batches are approved by an admin, APScheduler will automatically send messages when this time arrives.</small>
+            </div>
+          </div>
+
+          <div class="form-checkbox-group">
+            <label class="checkbox-container">
+              <input type="checkbox" id="createAutoGenerateBatches" checked>
+              <span class="checkmark"></span>
+              <span class="checkbox-label">Auto-generate batches from eligible leads immediately</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelCreateCampaignBtn" class="btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" id="saveCreateCampaignBtn" class="btn-action-primary">Create Campaign</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6. Edit Campaign Modal -->
+  <div id="campaignEditModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="editCampaignTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 id="editCampaignTitle" class="modal-title">Edit Campaign</h3>
+          <p class="modal-subtitle">Update campaign name and template (Draft or Scheduled only).</p>
+        </div>
+        <button type="button" id="closeEditCampaignModalBtn" class="modal-close-btn" data-dismiss="modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <form id="editCampaignForm">
+        <input type="hidden" id="editCampaignId">
+        <div class="modal-body">
+          <div id="editCampaignError" class="form-alert error hidden"></div>
+
+          <div class="form-group">
+            <label for="editCampaignName" class="form-label">Campaign Name <span class="required">*</span></label>
+            <input type="text" id="editCampaignName" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="editTemplateSelect" class="form-label">WhatsApp Template</label>
+            <select id="editTemplateSelect" class="form-select" required></select>
+          </div>
+
+          <div class="form-group">
+            <label for="editTemplateLanguage" class="form-label">Template Language Code</label>
+            <input type="text" id="editTemplateLanguage" class="form-input" required>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelEditCampaignBtn" class="btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" id="saveEditCampaignBtn" class="btn-action-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6.1 Create WhatsApp Template Modal (Image + Text) -->
+  <div id="templateCreateModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="createTemplateModalTitle">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3 id="createTemplateModalTitle" class="modal-title">+ Create WhatsApp Message Template</h3>
+          <p class="modal-subtitle">Design an Image + Text broadcast template and submit for Meta 24-hour review.</p>
+        </div>
+        <button type="button" id="closeCreateTemplateModalBtn" class="modal-close-btn" data-dismiss="modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <form id="createTemplateForm">
+        <div class="modal-body">
+          <div id="createTemplateError" class="form-alert error hidden"></div>
+
+          <!-- Strict Image Banner -->
+          <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-md); padding: 0.65rem 0.85rem; margin-bottom: 1rem; font-size: 0.8rem; color: #1e40af;">
+            <strong>Header Image Policy:</strong> Strictly images only (<code>.jpg</code>, <code>.jpeg</code>, <code>.png</code>, max 5MB). PDFs, documents, and video files are strictly prohibited and will be rejected.
+          </div>
+
+          <div class="form-row-2col">
+            <div class="form-group">
+              <label for="newTemplateName" class="form-label">Template Identifier Name <span class="required">*</span></label>
+              <input type="text" id="newTemplateName" class="form-input" placeholder="e.g. goa_early_bird_special" required>
+              <small class="form-hint">Auto-sanitized to lowercase letters, numbers, and underscores only.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="newTemplateCategory" class="form-label">Template Category <span class="required">*</span></label>
+              <select id="newTemplateCategory" class="form-select" required>
+                <option value="MARKETING" selected>MARKETING — Promotions, offers, and discounts</option>
+                <option value="UTILITY">UTILITY — Account updates, reminders, orders</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-2col">
+            <div class="form-group">
+              <label for="newTemplateLanguage" class="form-label">Language Code <span class="required">*</span></label>
+              <input type="text" id="newTemplateLanguage" class="form-input" value="en" required>
+              <small class="form-hint">Standard language code (e.g. <code>en</code>, <code>en_US</code>, <code>hi</code>).</small>
+            </div>
+
+            <div class="form-group">
+              <label for="newTemplateHeaderType" class="form-label">Header Media Format</label>
+              <select id="newTemplateHeaderType" class="form-select">
+                <option value="IMAGE" selected>IMAGE — Promotional Header Photo</option>
+                <option value="TEXT">TEXT — Static Text Header</option>
+                <option value="NONE">NONE — No Header</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Header Text Input (when TEXT selected) -->
+          <div id="newTemplateHeaderTextGroup" class="form-group hidden">
+            <label for="newTemplateHeaderText" class="form-label">Header Text</label>
+            <input type="text" id="newTemplateHeaderText" class="form-input" placeholder="e.g. Exclusive Travel Opportunity">
+          </div>
+
+          <!-- Header Image Upload Group (when IMAGE selected) -->
+          <div id="newTemplateImageGroup" class="form-group">
+            <label class="form-label">Header Image (Max 5MB — JPG / PNG only)</label>
+            <div id="templateImageDropZone" class="image-upload-zone">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+              <div style="font-size: 0.85rem; font-weight: 500; margin-top: 0.25rem;">Click or drag an image here to upload</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Accepted: .jpg, .jpeg, .png (Strictly No PDFs)</div>
+              <input type="file" id="templateImageInput" accept=".jpg,.jpeg,.png" class="hidden">
+            </div>
+
+            <div id="templateImagePreviewContainer" class="image-preview-thumb-box hidden">
+              <img id="templateImageThumb" class="image-preview-thumb" src="" alt="Header preview">
+              <button type="button" id="removeTemplateImageBtn" class="image-remove-btn" title="Remove image">&times;</button>
+              <input type="hidden" id="uploadedImagePath">
+            </div>
+          </div>
+
+          <!-- Body Text Input -->
+          <div class="form-group">
+            <label for="newTemplateBodyText" class="form-label">Body Text (with {{1}}, {{2}} variables) <span class="required">*</span></label>
+            <textarea id="newTemplateBodyText" class="form-textarea" rows="4" placeholder="Hello {{1}}, we are pleased to offer you our exclusive package to {{2}} at 20% off! Reply YES to know more." required></textarea>
+            <small class="form-hint">Use <code>{{1}}</code>, <code>{{2}}</code>, etc. for customer personalization variables.</small>
+          </div>
+
+          <!-- Live WhatsApp Message Preview Card -->
+          <div class="form-group">
+            <label class="form-label">Live WhatsApp Message Preview</label>
+            <div class="whatsapp-preview-wrapper">
+              <div class="whatsapp-bubble">
+                <img id="whatsappPreviewHeaderImg" class="whatsapp-header-img hidden" src="" alt="Header preview">
+                <div class="whatsapp-bubble-content">
+                  <div id="whatsappPreviewHeaderText" class="hidden" style="font-weight: 700; font-size: 0.875rem; color: #1e293b; margin-bottom: 0.35rem;"></div>
+                  <div id="whatsappPreviewBodyText" class="whatsapp-bubble-text">Your message preview will appear here as you type...</div>
+                  <div class="whatsapp-bubble-meta">
+                    <span id="whatsappPreviewTime">12:00 PM</span>
+                    <span class="whatsapp-ticks">✓✓</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelCreateTemplateBtn" class="btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" id="saveCreateTemplateBtn" class="btn-action-primary">Create & Submit Template</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6.2 Manage WhatsApp Templates Modal -->
+  <div id="templateManageModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="manageTemplatesModalTitle">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3 id="manageTemplatesModalTitle" class="modal-title">WhatsApp Message Templates</h3>
+          <p class="modal-subtitle">Review Meta approval status, sync templates from Meta Graph API, and test locally.</p>
+        </div>
+        <button type="button" id="closeManageTemplatesModalBtn" class="modal-close-btn" data-dismiss="modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="section-header-row" style="margin-bottom: 1rem;">
+          <div style="font-size: 0.85rem; color: var(--text-muted);">
+            Only <strong>APPROVED</strong> templates can be used to launch marketing broadcasts.
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="button" id="syncMetaTemplatesBtn" class="btn-action-outline">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+              Sync Status from Meta
+            </button>
+            <button type="button" id="openCreateFromManageBtn" class="btn-action-primary">
+              + New Template
+            </button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Template Name</th>
+                <th>Category</th>
+                <th>Lang</th>
+                <th>Header</th>
+                <th>Approval Status</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="manageTemplatesTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+        <div id="manageTemplatesEmptyState" class="tab-empty-state hidden">No WhatsApp message templates found. Click "+ New Template" to register one.</div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="closeManageTemplatesBottomBtn" class="btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Campaign Detail & Batches Modal -->
+  <div id="campaignDetailModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="detailCampaignTitle">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3 id="detailCampaignTitle" class="modal-title">Campaign Details</h3>
+          <p class="modal-subtitle">Batch generation, approval status, and message dispatch tracking.</p>
+        </div>
+        <button type="button" id="closeCampaignDetailBtn" class="modal-close-btn" data-dismiss="modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <!-- Quick Badges Bar -->
+      <div class="detail-badges-bar">
+        <span id="detailCampaignStatusBadge" class="badge">--</span>
+        <span id="detailCampaignTemplateBadge" class="badge badge-replied">--</span>
+        <span id="detailBatchesCount" class="badge badge-active">0 Batches</span>
+      </div>
+
+      <div class="modal-body">
+        <!-- KPI Row -->
+        <div class="campaign-detail-kpi-row">
+          <div class="detail-kpi-card">
+            <span class="detail-kpi-label">Total Leads Selected</span>
+            <strong id="detailTotalSelected" class="detail-kpi-value">0</strong>
+          </div>
+          <div class="detail-kpi-card">
+            <span class="detail-kpi-label">Eligible (OPTED_IN)</span>
+            <strong id="detailTotalEligible" class="detail-kpi-value" style="color: var(--success);">0</strong>
+          </div>
+          <div class="detail-kpi-card">
+            <span class="detail-kpi-label">Excluded (Ineligible)</span>
+            <strong id="detailTotalExcluded" class="detail-kpi-value" style="color: var(--danger);">0</strong>
+          </div>
+        </div>
+
+        <!-- Batches Breakdown Sub-table -->
+        <div class="detail-section-title" style="margin-top: 1rem;">Recipient Batches (Max 50 recipients per batch)</div>
+        <div class="table-responsive" style="margin-top: 0.5rem; max-height: 350px; overflow-y: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Batch #</th>
+                <th>Recipients</th>
+                <th>Approval</th>
+                <th>Send Status</th>
+                <th>Dispatch Counts</th>
+                <th>Created</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="detailBatchesTableBody">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button type="button" id="detailPartitionBtn" class="btn-action-accent">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Partition Remaining Leads
+        </button>
+        <button type="button" id="closeCampaignDetailFooterBtn" class="btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Batch Review & Recipients Modal -->
+  <div id="batchReviewModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="batchReviewModalTitle">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3 id="batchReviewModalTitle" class="modal-title">Review Recipients — Batch #<span id="batchReviewNumber"></span></h3>
+          <p class="modal-subtitle"><span id="batchReviewCampaignName"></span></p>
+        </div>
+        <button type="button" id="closeBatchReviewHeaderBtn" class="modal-close-btn" data-dismiss="modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <!-- Header badges -->
+      <div class="detail-badges-bar">
+        <span id="batchReviewApprovalBadge" class="badge">--</span>
+        <span id="batchReviewSendBadge" class="badge">--</span>
+        <span id="batchReviewSizeBadge" class="badge badge-active">--</span>
+      </div>
+
+      <div class="modal-body">
+        <div class="table-responsive" style="max-height: 380px; overflow-y: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Customer Name</th>
+                <th>Phone Number</th>
+                <th>Send Status</th>
+                <th>Message Log</th>
+                <th>Sent At</th>
+                <th>Details / Error</th>
+              </tr>
+            </thead>
+            <tbody id="batchRecipientsTableBody">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="justify-content: space-between;">
+        <div style="display: flex; gap: 0.5rem;">
+          <button type="button" id="batchReviewApproveBtn" class="btn-action-success" style="display: none;">
+            Approve Batch
+          </button>
+          <button type="button" id="batchReviewRejectBtn" class="btn-action-danger" style="display: none;">
+            Reject Batch
+          </button>
+          <button type="button" id="batchReviewSendBtn" class="btn-action-primary" style="display: none;">
+            Send Batch
+          </button>
+        </div>
+        <button type="button" id="closeBatchReviewBtn" class="btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Follow-up Reschedule Modal -->
+  <div id="followupRescheduleModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="followupRescheduleTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 id="followupRescheduleTitle" class="modal-title">Reschedule Follow-up</h3>
+          <p class="modal-subtitle">Adjust the scheduled execution timestamp for this sequence.</p>
+        </div>
+        <button type="button" id="closeRescheduleModalBtn" class="modal-close-btn" data-dismiss="modal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <form id="rescheduleFollowupForm">
+        <input type="hidden" id="rescheduleScheduleId">
+        <div class="modal-body">
+          <div id="rescheduleFollowupError" class="form-alert error hidden"></div>
+
+          <div class="form-group">
+            <label for="rescheduleDateTime" class="form-label">New Execution Date & Time <span class="required">*</span></label>
+            <input type="datetime-local" id="rescheduleDateTime" class="form-input" required>
+            <small class="form-hint">Must be a valid upcoming timestamp.</small>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelRescheduleBtn" class="btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" id="saveRescheduleBtn" class="btn-action-primary">Save Reschedule</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 10. Mark Followed Up / Call Log Modal -->
+  <div id="markFollowedUpModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="markFollowedUpTitle">
+    <div class="modal-dialog" style="max-width: 480px;">
+      <div class="modal-header">
+        <div>
+          <h3 id="markFollowedUpTitle" class="modal-title">Log Customer Call</h3>
+          <p class="modal-subtitle">Record phone call and clear lead from the action queue.</p>
+        </div>
+        <button type="button" id="closeMarkFollowedUpBtn" class="modal-close-btn" data-dismiss="modal" aria-label="Close dialog">&times;</button>
+      </div>
+      <form id="markFollowedUpForm">
+        <input type="hidden" id="markFollowedUpLeadId" />
+        <div class="modal-body">
+          <div id="markFollowedUpError" class="form-alert error hidden"></div>
+
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span id="markFollowedUpName" style="font-weight: 700; color: #1e293b; font-size: 0.95rem;">Customer Name</span>
+              <span class="badge badge-interested">Interested</span>
+            </div>
+            <div style="margin-top: 0.35rem;">
+              <a href="#" id="markFollowedUpPhoneLink" class="phone-call-link" style="font-size: 0.9rem;">+91...</a>
+            </div>
+            <div id="markFollowedUpReplyPreview" style="margin-top: 0.5rem; font-size: 0.825rem; font-style: italic; color: #475569; border-left: 3px solid #3b82f6; padding-left: 0.6rem; background: #ffffff; padding-top: 0.25rem; padding-bottom: 0.25rem; border-radius: 0 4px 4px 0;">
+              "..."
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="markFollowedUpNotesInput" class="form-label">Call / Follow-up Notes (Optional)</label>
+            <textarea id="markFollowedUpNotesInput" class="form-textarea" rows="3" placeholder="e.g. Spoke to customer, interested in 5N/6D Goa package for Dec, sent quotation on email..."></textarea>
+            <small class="form-hint">Notes will be recorded in the lead audit history.</small>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelMarkFollowedUpBtn" class="btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" id="saveMarkFollowedUpBtn" class="btn-action-primary">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Confirm Call Completed
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="toast hidden">
+    <span id="toastIcon" class="toast-icon"></span>
+    <span id="toastMessage" class="toast-message">Notification message</span>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/modals.js"></script>
+  <script src="/static/js/leads.js"></script>
+  <script src="/static/js/campaigns.js"></script>
+  <script src="/static/js/approvals.js"></script>
+  <script src="/static/js/followups.js"></script>
+  <script src="/static/js/excel.js"></script>
+  <script src="/static/js/reports.js"></script>
+  <script src="/static/js/settings.js"></script>
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
