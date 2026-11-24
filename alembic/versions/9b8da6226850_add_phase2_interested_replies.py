@@ -20,10 +20,14 @@ depends_on: Union[str, Sequence[str], None] = None
 
 def upgrade() -> None:
     """Upgrade schema."""
-    with op.batch_alter_table('leads', schema=None, recreate='always') as batch_op:
+    bind = op.get_bind()
+    is_sqlite = bind.dialect.name == "sqlite"
+    batch_kwargs = {"recreate": "always"} if is_sqlite else {}
+
+    with op.batch_alter_table('leads', schema=None, **batch_kwargs) as batch_op:
         batch_op.add_column(sa.Column('last_reply_text', sa.Text(), nullable=True))
         batch_op.add_column(sa.Column('last_replied_at', sa.DateTime(timezone=True), nullable=True))
-        batch_op.add_column(sa.Column('needs_manual_followup', sa.Boolean(), nullable=False, server_default=sa.text('0')))
+        batch_op.add_column(sa.Column('needs_manual_followup', sa.Boolean(), nullable=False, server_default=sa.false()))
         batch_op.add_column(sa.Column('followed_up_at', sa.DateTime(timezone=True), nullable=True))
         batch_op.add_column(sa.Column('followup_notes', sa.Text(), nullable=True))
         batch_op.create_index('ix_leads_needs_manual_followup', ['needs_manual_followup'], unique=False)
@@ -37,7 +41,11 @@ def upgrade() -> None:
 
 def downgrade() -> None:
     """Downgrade schema."""
-    with op.batch_alter_table('leads', schema=None, recreate='always') as batch_op:
+    bind = op.get_bind()
+    is_sqlite = bind.dialect.name == "sqlite"
+    batch_kwargs = {"recreate": "always"} if is_sqlite else {}
+
+    with op.batch_alter_table('leads', schema=None, **batch_kwargs) as batch_op:
         batch_op.drop_constraint('ck_leads_status_allowed', type_='check')
         batch_op.create_check_constraint(
             'ck_leads_status_allowed',

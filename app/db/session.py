@@ -23,20 +23,32 @@ def set_sqlite_pragma(dbapi_connection: Any, connection_record: Any) -> None:
 
 
 def create_db_engine(database_url: str | None = None, echo: bool | None = None) -> Engine:
-    """Create a configured SQLAlchemy engine."""
+    """Create a configured SQLAlchemy engine supporting PostgreSQL (psycopg 3) and SQLite."""
     settings = get_settings()
-    url = database_url or settings.DATABASE_URL
+    raw_url = database_url or settings.sync_database_url
+    url = settings.normalize_db_url(raw_url)
+
+    # Transparently route through local WebSocket bridge if outbound port 5432 is blocked locally
+    from app.core.neon_bridge import resolve_database_url
+    url = resolve_database_url(url)
+
     is_echo = echo if echo is not None else settings.DEBUG
 
-    connect_args: dict[str, Any] = {}
-    if url.startswith("sqlite"):
-        connect_args["check_same_thread"] = False
+    engine_kwargs: dict[str, Any] = {
+        "echo": is_echo,
+    }
 
-    return create_engine(
-        url,
-        connect_args=connect_args,
-        echo=is_echo,
-    )
+    if url.startswith("sqlite"):
+        engine_kwargs["connect_args"] = {"check_same_thread": False}
+    else:
+        # PostgreSQL / Neon configuration
+        engine_kwargs["pool_pre_ping"] = settings.DB_POOL_PRE_PING
+        engine_kwargs["pool_recycle"] = settings.DB_POOL_RECYCLE_SECONDS
+        engine_kwargs["pool_size"] = settings.DB_POOL_SIZE
+        engine_kwargs["max_overflow"] = settings.DB_MAX_OVERFLOW
+        engine_kwargs["pool_timeout"] = settings.DB_POOL_TIMEOUT_SECONDS
+
+    return create_engine(url, **engine_kwargs)
 
 
 # Central application engine and session factory
@@ -50,9 +62,12 @@ SessionLocal = sessionmaker(
 
 
 def get_db() -> Generator[Session, None, None]:
-    """FastAPI dependency yielding an isolated database session."""
+    """FastAPI dependency yielding an isolated database session with auto-rollback on error."""
     db = SessionLocal()
     try:
         yield db
+    except Exception:
+        db.rollback()
+        raise
     finally:
         db.close()

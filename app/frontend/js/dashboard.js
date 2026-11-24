@@ -15,12 +15,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   const sidebar = document.getElementById('sidebar');
   const pageTitle = document.getElementById('pageTitle');
 
-  // Containers
+  // View Containers
   const overviewContainer = document.getElementById('overviewContainer');
   const leadsContainer = document.getElementById('leadsContainer');
   const campaignsContainer = document.getElementById('campaignsContainer');
   const approvalsContainer = document.getElementById('approvalsContainer');
-  const followupsContainer = document.getElementById('followupsContainer');
+  const respondentsContainer = document.getElementById('respondentsContainer');
+  const interestedContainer = document.getElementById('interestedContainer');
   const excelContainer = document.getElementById('excelContainer');
   const reportsContainer = document.getElementById('reportsContainer');
   const settingsContainer = document.getElementById('settingsContainer');
@@ -31,7 +32,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     leadsContainer,
     campaignsContainer,
     approvalsContainer,
-    followupsContainer,
+    respondentsContainer,
+    interestedContainer,
     excelContainer,
     reportsContainer,
     settingsContainer,
@@ -69,9 +71,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const statFailedMessages = document.getElementById('statFailedMessages');
   const statDeliveryRate = document.getElementById('statDeliveryRate');
 
-  const statScheduledFollowups = document.getElementById('statScheduledFollowups');
+  const statTotalRespondents = document.getElementById('statTotalRespondents');
+  const statInterestedRespondents = document.getElementById('statInterestedRespondents');
+  const statUnclassifiedRespondents = document.getElementById('statUnclassifiedRespondents');
   const lastSyncTimeEl = document.getElementById('lastSyncTime');
-  const schedulerStatusTag = document.getElementById('schedulerStatusTag');
   const whatsappStatusTag = document.getElementById('whatsappStatusTag');
   const activityList = document.getElementById('activityList');
 
@@ -89,21 +92,25 @@ document.addEventListener('DOMContentLoaded', async () => {
       title: 'Campaigns',
       isCampaigns: true,
     },
-    '/dashboard/excel': {
-      title: 'Excel Sync',
-      isExcel: true,
-    },
     '/dashboard/approvals': {
       title: 'Batch Approvals',
       isApprovals: true,
     },
-    '/dashboard/followups': {
-      title: 'Follow-up Schedules',
-      isFollowups: true,
+    '/dashboard/respondents': {
+      title: 'Respondents',
+      isRespondents: true,
+    },
+    '/dashboard/interested': {
+      title: 'Interested',
+      isInterested: true,
     },
     '/dashboard/reports': {
       title: 'Delivery Reports',
       isReports: true,
+    },
+    '/dashboard/excel': {
+      title: 'Excel Sync',
+      isExcel: true,
     },
     '/dashboard/settings': {
       title: 'Settings',
@@ -111,35 +118,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     },
   };
 
-  // 1. Authenticate user & guard route
-  try {
-    const authRes = await API.get('/api/auth/me');
-    if (!authRes || !authRes.ok) {
-      window.location.href = '/login?expired=1';
-      return;
-    }
-    const user = await authRes.json();
-    if (userProfileName) userProfileName.textContent = user.username;
-    if (userRoleTag) userRoleTag.textContent = user.role.toUpperCase();
-    checkHeaderApiStatus();
-  } catch (err) {
-    window.location.href = '/login?expired=1';
-    return;
-  }
-
-  // Dynamic Top Header API Status Helper
-  function updateHeaderApiStatus(whatsappEnabled) {
+  // Header Connection Status Indicator Controller
+  function updateHeaderApiStatus(isOnline, whatsappEnabled) {
     const headerDot = document.getElementById('headerApiStatusDot');
     const headerText = document.getElementById('headerApiStatusText');
-    if (headerDot && headerText) {
-      if (whatsappEnabled) {
-        headerDot.className = 'status-dot active pulsing';
-        headerDot.style.background = '#047857';
-        headerText.textContent = 'WhatsApp API Connected';
-      } else {
-        headerDot.className = 'status-dot inactive';
-        headerDot.style.background = '#B45309';
-        headerText.textContent = 'WhatsApp API Offline (Mock Mode)';
+    const headerIndicator = document.getElementById('headerApiStatusIndicator');
+    if (!headerDot || !headerText) return;
+
+    if (!isOnline) {
+      headerDot.className = 'status-dot inactive';
+      headerDot.style.background = '#EF4444';
+      headerText.textContent = 'Not Connected';
+      if (headerIndicator) {
+        headerIndicator.title = 'FastAPI server or Neon PostgreSQL database is unreachable';
+      }
+      return;
+    }
+
+    if (whatsappEnabled) {
+      headerDot.className = 'status-dot active pulsing';
+      headerDot.style.background = '#047857';
+      headerText.textContent = 'Connected (WhatsApp Live)';
+      if (headerIndicator) {
+        headerIndicator.title = 'FastAPI & Neon PostgreSQL Active • Meta WhatsApp Live Broadcast Enabled';
+      }
+    } else {
+      headerDot.className = 'status-dot mock';
+      headerDot.style.background = '#0D9488';
+      headerText.textContent = 'Connected (Sandbox / Mock Mode)';
+      if (headerIndicator) {
+        headerIndicator.title = 'FastAPI & Neon PostgreSQL Active • Outbound WhatsApp Mocked for Testing';
       }
     }
   }
@@ -149,14 +157,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       const res = await API.get('/api/dashboard/overview');
       if (res && res.ok) {
         const data = await res.json();
-        updateHeaderApiStatus(data.whatsapp_enabled);
+        updateHeaderApiStatus(true, Boolean(data.whatsapp_enabled));
+      } else {
+        updateHeaderApiStatus(false, false);
       }
     } catch {
-      updateHeaderApiStatus(false);
+      updateHeaderApiStatus(false, false);
     }
   }
 
-  // 2. Route Rendering Controller
+  // Route Rendering Controller
   function renderCurrentRoute() {
     let currentPath = window.location.pathname.toLowerCase().replace(/\/$/, '');
     if (!currentPath || currentPath === '') currentPath = '/dashboard';
@@ -174,8 +184,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     if (pageTitle) pageTitle.textContent = config.title;
+    document.title = `${config.title} - Travel CRM`;
 
-    // Reset visibility
+    // Reset visibility of all page containers
     hideAllContainers();
 
     if (config.isOverview) {
@@ -183,37 +194,42 @@ document.addEventListener('DOMContentLoaded', async () => {
       loadDashboardData();
     } else if (config.isLeads) {
       if (leadsContainer) leadsContainer.classList.remove('hidden');
-      if (window.LeadsManager) {
+      if (window.LeadsManager && window.LeadsManager.init) {
         window.LeadsManager.init();
       }
     } else if (config.isCampaigns) {
       if (campaignsContainer) campaignsContainer.classList.remove('hidden');
-      if (window.CampaignsManager) {
+      if (window.CampaignsManager && window.CampaignsManager.init) {
         window.CampaignsManager.init();
       }
     } else if (config.isApprovals) {
       if (approvalsContainer) approvalsContainer.classList.remove('hidden');
-      if (window.ApprovalsManager) {
+      if (window.ApprovalsManager && window.ApprovalsManager.init) {
         window.ApprovalsManager.init();
       }
-    } else if (config.isFollowups) {
-      if (followupsContainer) followupsContainer.classList.remove('hidden');
-      if (window.FollowupsManager) {
-        window.FollowupsManager.init();
+    } else if (config.isRespondents) {
+      if (respondentsContainer) respondentsContainer.classList.remove('hidden');
+      if (window.RespondentsManager && window.RespondentsManager.init) {
+        window.RespondentsManager.init('all');
+      }
+    } else if (config.isInterested) {
+      if (interestedContainer) interestedContainer.classList.remove('hidden');
+      if (window.RespondentsManager && window.RespondentsManager.initInterested) {
+        window.RespondentsManager.initInterested();
       }
     } else if (config.isExcel) {
       if (excelContainer) excelContainer.classList.remove('hidden');
-      if (window.ExcelSyncManager) {
+      if (window.ExcelSyncManager && window.ExcelSyncManager.init) {
         window.ExcelSyncManager.init();
       }
     } else if (config.isReports) {
       if (reportsContainer) reportsContainer.classList.remove('hidden');
-      if (window.ReportsManager) {
+      if (window.ReportsManager && window.ReportsManager.init) {
         window.ReportsManager.init();
       }
     } else if (config.isSettings) {
       if (settingsContainer) settingsContainer.classList.remove('hidden');
-      if (window.SettingsManager) {
+      if (window.SettingsManager && window.SettingsManager.init) {
         window.SettingsManager.init();
       }
     } else {
@@ -227,7 +243,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Intercept navigation link clicks for smooth routing
+  // Intercept navigation link clicks for smooth SPA routing
   document.querySelectorAll('.sidebar-nav .nav-item').forEach(link => {
     link.addEventListener('click', (e) => {
       const href = link.getAttribute('href');
@@ -244,7 +260,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   window.addEventListener('popstate', renderCurrentRoute);
 
-  // 3. Fetch and render dashboard overview stats
+  // Immediate route resolution on load (before async auth check completes)
+  renderCurrentRoute();
+
+  // 1. Authenticate user & guard route
+  try {
+    const authRes = await API.get('/api/auth/me');
+    if (!authRes || !authRes.ok) {
+      window.location.href = '/login?expired=1';
+      return;
+    }
+    const user = await authRes.json();
+    if (userProfileName) userProfileName.textContent = user.username;
+    if (userRoleTag) userRoleTag.textContent = (user.role || 'ADMIN').toUpperCase();
+    checkHeaderApiStatus();
+  } catch (err) {
+    console.warn('[Dashboard] Auth verification error:', err);
+    window.location.href = '/login?expired=1';
+    return;
+  }
+
+  // 2. Fetch and render dashboard overview stats
   async function loadDashboardData() {
     try {
       if (refreshStatsBtn) refreshStatsBtn.classList.add('loading');
@@ -253,6 +289,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!response || !response.ok) {
         const status = response ? response.status : 'Network Error';
         console.error(`[Dashboard] Failed to fetch /api/dashboard/overview (HTTP ${status})`);
+        updateHeaderApiStatus(false, false);
         if (activityList) {
           activityList.innerHTML = `
             <div class="empty-state">
@@ -267,7 +304,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const data = await response.json();
       const stats = data.stats || {};
 
-      // Populate Lead metrics
+      // Populate Lead metrics (default to 0 when empty)
       if (statTotalLeads) statTotalLeads.textContent = (stats.total_leads ?? 0).toLocaleString();
       if (statPendingLeads) statPendingLeads.textContent = (stats.pending_leads ?? 0).toLocaleString();
       if (statRepliedLeads) statRepliedLeads.textContent = (stats.replied_leads ?? 0).toLocaleString();
@@ -297,8 +334,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       }
 
-      // Follow-up automation
-      if (statScheduledFollowups) statScheduledFollowups.textContent = (stats.scheduled_follow_ups ?? 0).toLocaleString();
+      // WhatsApp respondents metrics
+      if (statTotalRespondents) statTotalRespondents.textContent = (stats.total_respondents ?? 0).toLocaleString();
+      if (statInterestedRespondents) statInterestedRespondents.textContent = (stats.interested_respondents ?? 0).toLocaleString();
+      if (statUnclassifiedRespondents) statUnclassifiedRespondents.textContent = (stats.unclassified_respondents ?? 0).toLocaleString();
 
       // Last sync timestamp
       if (lastSyncTimeEl) {
@@ -310,17 +349,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       }
 
-      // System health status tags
-      if (schedulerStatusTag) {
-        if (data.scheduler_enabled) {
-          schedulerStatusTag.textContent = 'ACTIVE';
-          schedulerStatusTag.className = 'health-status-tag active';
-        } else {
-          schedulerStatusTag.textContent = 'DISABLED';
-          schedulerStatusTag.className = 'health-status-tag inactive';
-        }
-      }
-
+      // System status tags
       if (whatsappStatusTag) {
         if (data.whatsapp_enabled) {
           whatsappStatusTag.textContent = 'LIVE';
@@ -332,7 +361,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
       // Update top header indicator
-      updateHeaderApiStatus(data.whatsapp_enabled);
+      updateHeaderApiStatus(true, Boolean(data.whatsapp_enabled));
 
       // Populate Interested Leads Call Queue widget
       renderInterestedLeadsWidget(data.interested_pending_call_count, data.latest_interested_leads);
@@ -342,6 +371,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     } catch (err) {
       console.error('[Dashboard] Error fetching /api/dashboard/overview:', err);
+      updateHeaderApiStatus(false, false);
       if (activityList) {
         activityList.innerHTML = `
           <div class="empty-state">
@@ -379,7 +409,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // 4a. Render Interested Leads Widget
+  // Render Interested Leads Widget on Overview
   function renderInterestedLeadsWidget(pendingCount, leads) {
     const badge = document.getElementById('dashboardInterestedCountBadge');
     const container = document.getElementById('dashboardInterestedLeadsList');
@@ -434,7 +464,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }).join('');
   }
 
-  // 4. Render Activity Timeline
+  // Render Activity Timeline on Overview
   function renderRecentActivity(activities) {
     if (!activityList) return;
 
@@ -503,7 +533,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     })[m]);
   }
 
-  // 5. Logout handler
+  // Logout handlers
   async function handleLogout() {
     try {
       await API.post('/api/auth/logout');
@@ -516,14 +546,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (headerLogoutBtn) headerLogoutBtn.addEventListener('click', handleLogout);
   if (sidebarLogoutBtn) sidebarLogoutBtn.addEventListener('click', handleLogout);
 
-  // 6. Refresh action
+  // Refresh action on Overview
   if (refreshStatsBtn) {
     refreshStatsBtn.addEventListener('click', () => {
       loadDashboardData();
     });
   }
 
-  // 7. Excel sync action
+  // Excel sync action on Overview
   if (syncExcelBtn) {
     syncExcelBtn.addEventListener('click', async () => {
       try {
@@ -546,17 +576,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // 8. Mobile menu toggle
+  // Mobile menu toggle
   if (mobileMenuToggle && sidebar) {
     mobileMenuToggle.addEventListener('click', () => {
       sidebar.classList.toggle('open');
     });
   }
 
-  // 9. Interested Leads Queue interactions on Dashboard Overview
-  const interestedContainer = document.getElementById('dashboardInterestedLeadsList');
-  if (interestedContainer) {
-    interestedContainer.addEventListener('click', (e) => {
+  // Interested Leads Queue interactions on Dashboard Overview
+  const dashInterestedList = document.getElementById('dashboardInterestedLeadsList');
+  if (dashInterestedList) {
+    dashInterestedList.addEventListener('click', (e) => {
       const btn = e.target.closest('.dash-quick-mark-called');
       if (btn) {
         e.preventDefault();
@@ -575,17 +605,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (viewAllInterestedLink) {
     viewAllInterestedLink.addEventListener('click', (e) => {
       e.preventDefault();
-      window.history.pushState({}, '', '/dashboard/leads?tab=interested');
+      window.history.pushState({}, '', '/dashboard/interested');
       renderCurrentRoute();
-      if (window.LeadsManager) {
-        window.LeadsManager.switchQueueTab('interested');
-      }
     });
   }
 
   // Expose loadDashboardData for cross-module refreshes
   window.loadDashboardData = loadDashboardData;
-
-  // Initial route execution
-  renderCurrentRoute();
 });

@@ -8,9 +8,9 @@ from sqlalchemy.orm import Session
 
 from app.core.config import get_settings
 from app.db.models.campaign import Campaign
-from app.db.models.follow_up import FollowUpSchedule
 from app.db.models.lead import Lead
 from app.db.models.message import IncomingMessage, MessageLog
+from app.db.models.respondent import Respondent
 from app.db.models.sync_log import SyncLog
 from app.schemas.dashboard_schemas import (
     ActivityItemResponse,
@@ -72,11 +72,17 @@ class DashboardService:
         read_messages = msg_row.read if msg_row else 0
         failed_messages = msg_row.failed if msg_row else 0
 
-        # 4. Scheduled follow-ups
-        sched_stmt = select(func.count(FollowUpSchedule.id)).where(
-            FollowUpSchedule.status.in_(["Scheduled", "Approved"])
+        # 4. Respondent metrics
+        resp_stmt = select(
+            func.count(Respondent.id).label("total"),
+            func.count(Respondent.id).filter(Respondent.classification == "INTERESTED").label("interested"),
+            func.count(Respondent.id).filter(Respondent.classification == "UNCLASSIFIED").label("unclassified"),
         )
-        scheduled_follow_ups = db.scalar(sched_stmt) or 0
+        resp_row = db.execute(resp_stmt).first()
+        total_respondents = resp_row.total if resp_row else 0
+        interested_respondents = resp_row.interested if resp_row else 0
+        unclassified_respondents = resp_row.unclassified if resp_row else 0
+        scheduled_follow_ups = 0
 
         # 5. Last sync timestamp
         sync_stmt = select(SyncLog.created_at).order_by(SyncLog.created_at.desc()).limit(1)
@@ -99,6 +105,9 @@ class DashboardService:
             read_messages=read_messages,
             failed_messages=failed_messages,
             scheduled_follow_ups=scheduled_follow_ups,
+            total_respondents=total_respondents,
+            interested_respondents=interested_respondents,
+            unclassified_respondents=unclassified_respondents,
             last_sync_timestamp=last_sync_timestamp,
         )
 
@@ -207,6 +216,6 @@ class DashboardService:
             interested_pending_call_count=stats.interested_pending_call_count,
             latest_interested_leads=[LeadResponse.model_validate(l) for l in latest_interested],
             server_time=datetime.now(timezone.utc),
-            scheduler_enabled=settings.ENABLE_SCHEDULER,
+            scheduler_enabled=False,
             whatsapp_enabled=settings.WHATSAPP_ENABLED,
         )

@@ -30,7 +30,7 @@ class ImportPreviewResponse(BaseModel):
     valid_rows: int = Field(description="Rows meeting syntactic validation")
     invalid_rows: int = Field(description="Rows with missing or malformed fields")
     duplicate_rows: int = Field(description="Rows rejected as duplicate phone numbers within file")
-    existing_leads: int = Field(description="Rows already present in SQLite database")
+    existing_leads: int = Field(description="Rows already present in database")
     eligible_for_import: int = Field(description="Net new, valid records eligible for insertion")
     errors: List[RowValidationError] = Field(default_factory=list, description="Row-level diagnostics")
     eligible_records: List[EligibleRecord] = Field(default_factory=list, description="List of importable leads")

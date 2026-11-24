@@ -1,7 +1,7 @@
 """Application configuration management using Pydantic Settings."""
 
 from functools import lru_cache
-from typing import Literal
+from typing import Literal, Optional
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -47,10 +47,34 @@ class Settings(BaseSettings):
         description="Standard logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)",
     )
 
-    # Database Configuration
+    # Database Configuration (Neon PostgreSQL with connection pooling & direct migration support)
     DATABASE_URL: str = Field(
         default="sqlite:///./travel_agency.db",
-        description="SQLAlchemy database connection string",
+        description="Pooled PostgreSQL connection string for normal application operations",
+    )
+    DATABASE_URL_DIRECT: Optional[str] = Field(
+        default=None,
+        description="Direct unpooled PostgreSQL connection string for schema migrations",
+    )
+    DB_POOL_SIZE: int = Field(
+        default=10,
+        description="SQLAlchemy QueuePool connection pool size",
+    )
+    DB_MAX_OVERFLOW: int = Field(
+        default=20,
+        description="SQLAlchemy QueuePool max overflow connection count",
+    )
+    DB_POOL_TIMEOUT_SECONDS: int = Field(
+        default=30,
+        description="SQLAlchemy QueuePool timeout in seconds",
+    )
+    DB_POOL_RECYCLE_SECONDS: int = Field(
+        default=1800,
+        description="Connection recycle interval in seconds (30 minutes)",
+    )
+    DB_POOL_PRE_PING: bool = Field(
+        default=True,
+        description="Enable connection health check pre-ping on checkout",
     )
 
     # Excel Integration Configuration
@@ -68,21 +92,7 @@ class Settings(BaseSettings):
     )
     DEFAULT_FOLLOW_UP_LIMIT: int = Field(
         default=5,
-        description="Default number of follow-ups allowed per lead",
-    )
-
-    # Scheduler Configuration (Phase 5)
-    ENABLE_SCHEDULER: bool = Field(
-        default=True,
-        description="Toggle background APScheduler execution",
-    )
-    SCHEDULER_TIMEZONE: str = Field(
-        default="Asia/Kolkata",
-        description="Timezone used for local business scheduling and evaluation",
-    )
-    SCHEDULER_POLL_INTERVAL_SECONDS: int = Field(
-        default=60,
-        description="Interval in seconds between scheduler polling cycles",
+        description="Default lead follow up limit",
     )
 
     # Meta WhatsApp Cloud API Configuration (Phase 6 & 7)
@@ -165,6 +175,29 @@ class Settings(BaseSettings):
             and self.WHATSAPP_ACCESS_TOKEN.strip()
             and self.WHATSAPP_PHONE_NUMBER_ID.strip()
         )
+
+    @staticmethod
+    def normalize_db_url(url: Optional[str]) -> str:
+        """Ensure PostgreSQL URLs use the psycopg 3 driver (postgresql+psycopg://)."""
+        if not url:
+            return ""
+        trimmed = url.strip().strip("'\"")
+        if trimmed.startswith("postgres://"):
+            trimmed = "postgresql+psycopg://" + trimmed[len("postgres://"):]
+        elif trimmed.startswith("postgresql://") and not trimmed.startswith("postgresql+"):
+            trimmed = "postgresql+psycopg://" + trimmed[len("postgresql://"):]
+        return trimmed
+
+    @property
+    def sync_database_url(self) -> str:
+        """Return the normalized pooled database connection URL."""
+        return self.normalize_db_url(self.DATABASE_URL)
+
+    @property
+    def migration_database_url(self) -> str:
+        """Return the normalized direct connection URL for migrations, falling back to pooled."""
+        raw = self.DATABASE_URL_DIRECT or self.DATABASE_URL
+        return self.normalize_db_url(raw)
 
 
 @lru_cache

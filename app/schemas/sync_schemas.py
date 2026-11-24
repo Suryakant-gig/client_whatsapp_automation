@@ -19,6 +19,6 @@ class ExcelSyncResponse(BaseModel):
     success: bool = Field(description="True if synchronization completed without error")
     file_path: str = Field(description="Target workbook path updated")
     backup_path: Optional[str] = Field(default=None, description="Timestamped backup copy location")
-    records_matched: int = Field(description="Number of workbook rows matched to SQLite leads")
+    records_matched: int = Field(description="Number of workbook rows matched to CRM leads")
     records_updated: int = Field(description="Number of rows updated with automation columns")
     message: str = Field(description="Status description")

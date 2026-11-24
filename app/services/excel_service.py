@@ -223,7 +223,7 @@ class ExcelService:
                 eligible_records=[],
             )
 
-        # Retrieve existing phone numbers and serial numbers from SQLite
+        # Retrieve existing phone numbers and serial numbers from database
         existing_phones_query = select(Lead.phone_number).distinct()
         existing_phones = set(db.scalars(existing_phones_query).all())
 
@@ -316,7 +316,7 @@ class ExcelService:
 
             seen_phones_in_file.add(clean_phone)
 
-            # 5. Detect Existing Lead in SQLite
+            # 5. Detect Existing Lead in database
             if clean_phone in existing_phones:
                 existing_leads_count += 1
                 errors.append(
@@ -358,7 +358,7 @@ class ExcelService:
         file_name: str,
         db: Session,
     ) -> ImportConfirmResponse:
-        """Transactionally import confirmed eligible records into SQLite.
+        """Transactionally import confirmed eligible records into database.
 
         Logs operation in sync_logs table.
         Rolls back completely if an unexpected error occurs.
@@ -440,7 +440,7 @@ class ExcelService:
         target_path: Optional[str],
         db: Session,
     ) -> ExcelSyncResponse:
-        """Safely synchronize SQLite lead state into the authorized workbook.
+        """Safely synchronize database lead state into the authorized workbook.
 
         - Preserves original customer columns.
         - Appends or updates automation columns.
@@ -487,7 +487,7 @@ class ExcelService:
         backup_path = backup_dir / backup_filename
         shutil.copy2(file_path, backup_path)
 
-        # 2. Fetch lead metadata from SQLite
+        # 2. Fetch lead metadata from database
         leads = db.scalars(select(Lead)).all()
         lead_by_phone: Dict[str, Lead] = {lead.phone_number: lead for lead in leads}
         lead_by_serial: Dict[str, Lead] = {lead.serial_number: lead for lead in leads if lead.serial_number}
@@ -543,7 +543,7 @@ class ExcelService:
                     sent_counts=sent_follow_ups_by_lead,
                     latest_sent=latest_sent_by_lead,
                     latest_reply=latest_reply_by_lead,
-                    default_limit=settings.DEFAULT_FOLLOW_UP_LIMIT,
+                    default_limit=getattr(settings, "DEFAULT_FOLLOW_UP_LIMIT", 5),
                 )
             else:
                 records_matched, records_updated = cls._sync_csv(
@@ -554,7 +554,7 @@ class ExcelService:
                     sent_counts=sent_follow_ups_by_lead,
                     latest_sent=latest_sent_by_lead,
                     latest_reply=latest_reply_by_lead,
-                    default_limit=settings.DEFAULT_FOLLOW_UP_LIMIT,
+                    default_limit=getattr(settings, "DEFAULT_FOLLOW_UP_LIMIT", 5),
                 )
 
             # Record successful sync log

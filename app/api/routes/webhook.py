@@ -90,18 +90,25 @@ async def receive_webhook(
             detail="Malformed JSON payload",
         ) from exc
 
-    # 3. Process events inside database transaction
-    try:
-        result = WebhookService.process_webhook_payload(db=db, payload=payload)
-        return WebhookStatusResponse(
-            status=result["status"],
-            processed_messages=result["processed_messages"],
-            processed_statuses=result["processed_statuses"],
-        )
-    except Exception as exc:
-        db.rollback()
-        logger.exception("Error processing webhook events")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Error processing webhook events",
-        ) from exc
+    # 3. Process events inside database transaction with retry for transient cold-start reconnection
+    max_retries = 2
+    for attempt in range(max_retries + 1):
+        try:
+            result = WebhookService.process_webhook_payload(db=db, payload=payload)
+            return WebhookStatusResponse(
+                status=result["status"],
+                processed_messages=result["processed_messages"],
+                processed_statuses=result["processed_statuses"],
+            )
+        except Exception as exc:
+            db.rollback()
+            if attempt < max_retries and any(err in str(exc).lower() for err in ("connection", "closed", "timeout", "reconnect", "reset")):
+                logger.warning("Transient DB connection issue during webhook processing (attempt %d): %s; retrying...", attempt + 1, str(exc))
+                import time
+                time.sleep(0.5)
+                continue
+            logger.exception("Error processing webhook events")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Error processing webhook events",
+            ) from exc

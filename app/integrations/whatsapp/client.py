@@ -224,6 +224,87 @@ class WhatsAppCloudClient:
             fbtrace_id=fbtrace_id,
         )
 
+    async def send_text_message(
+        self,
+        to: str,
+        text: str,
+    ) -> Dict[str, Any]:
+        """Send a WhatsApp freeform text session message via Meta Cloud API.
+
+        Permitted within Meta's 24-hour customer service window.
+        """
+        self._validate_configuration()
+
+        recipient = self.normalize_recipient_phone(to)
+        url = self._build_url()
+
+        payload: Dict[str, Any] = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": recipient,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": text,
+            },
+        }
+
+        headers = {
+            "Authorization": f"Bearer {self._settings.WHATSAPP_ACCESS_TOKEN}",
+            "Content-Type": "application/json",
+        }
+
+        client = await self.get_http_client()
+
+        logger.info(
+            "Sending WhatsApp text session message to recipient ending in '...%s'",
+            recipient[-4:] if len(recipient) >= 4 else recipient,
+        )
+
+        try:
+            response = await client.post(url, json=payload, headers=headers)
+        except httpx.TimeoutException as exc:
+            raise WhatsAppTimeoutError("Meta WhatsApp API request timed out") from exc
+        except httpx.RequestError as exc:
+            raise WhatsAppConnectionError(f"Failed to connect to Meta WhatsApp API: {type(exc).__name__}") from exc
+
+        status = response.status_code
+        try:
+            data = response.json()
+        except Exception:
+            data = {"raw_text": response.text}
+
+        if 200 <= status < 300:
+            messages = data.get("messages", [])
+            if not messages or not isinstance(messages, list) or not messages[0].get("id"):
+                raise WhatsAppAPIError("Meta API response did not contain message ID")
+
+            wa_id = messages[0]["id"]
+            logger.info("WhatsApp text message accepted by Meta API [wa_id=%s]", wa_id)
+            return {
+                "whatsapp_message_id": wa_id,
+                "api_status": "ACCEPTED",
+                "raw_response": data,
+            }
+
+        error_info = data.get("error", {}) if isinstance(data, dict) else {}
+        error_msg = error_info.get("message", response.text)
+        error_code = error_info.get("code")
+        error_subcode = error_info.get("error_subcode")
+        fbtrace_id = error_info.get("fbtrace_id")
+
+        if status in (401, 403) or error_code == 190:
+            raise WhatsAppAuthError(
+                message="Meta WhatsApp API authentication failed: Meta Access Token is expired or invalid (Error 190).",
+                error_code=error_code or 190,
+            )
+        if status == 429:
+            raise WhatsAppRateLimitError(message=f"Meta WhatsApp API rate limit exceeded: {error_msg}")
+        if status >= 500:
+            raise WhatsAppServerError(message=f"Meta WhatsApp API internal server error (HTTP {status}): {error_msg}", status_code=status)
+
+        raise WhatsAppAPIError(message=f"Meta WhatsApp API rejected request: {error_msg}", error_code=error_code, error_subcode=error_subcode, fbtrace_id=fbtrace_id)
+
     async def fetch_meta_templates(self) -> List[Dict[str, Any]]:
         """Fetch approved WhatsApp message templates from Meta Graph API (read-only).
 

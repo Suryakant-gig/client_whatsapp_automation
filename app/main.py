@@ -16,15 +16,13 @@ from app.core.config import get_settings
 from app.core.logging import setup_logging
 from app.db.session import SessionLocal, get_db
 from app.services.auth_service import AuthService
-from app.services.followup_service import FollowUpService
-from app.services.scheduler_manager import get_scheduler_manager
 
 logger = logging.getLogger("app")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
-    """Application lifespan manager handling startup, offline reconciliation, and background scheduler."""
+    """Application lifespan manager handling startup and shutdown."""
     settings = get_settings()
     setup_logging(settings.LOG_LEVEL)
 
@@ -35,29 +33,9 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         settings.DEBUG,
     )
 
-    # 1. Critical offline recovery: reconcile overdue follow-ups missed while laptop was offline
-    try:
-        with SessionLocal() as db:
-            skipped = FollowUpService.reconcile_offline_missed_schedules(db)
-            if skipped > 0:
-                logger.info("Startup reconciliation: Marked %d missed schedules as Skipped", skipped)
-    except Exception as e:
-        logger.error("Error during startup offline schedule reconciliation: %s", str(e))
-
-    # 2. Start background scheduler if enabled
-    scheduler_manager = get_scheduler_manager()
-    if settings.ENABLE_SCHEDULER:
-        try:
-            scheduler_manager.start()
-        except Exception as e:
-            logger.error("Error starting background scheduler: %s", str(e))
-
     yield
 
-    # 3. Graceful shutdown of scheduler
-    scheduler_manager.shutdown(wait=False)
-
-    # 4. Safely close WhatsApp Cloud API HTTP client
+    # Safely close WhatsApp Cloud API HTTP client
     try:
         from app.integrations.whatsapp.client import get_whatsapp_client
         wa_client = get_whatsapp_client()

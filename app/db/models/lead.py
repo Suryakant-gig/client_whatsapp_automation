@@ -3,7 +3,7 @@
 from datetime import datetime, timezone
 from typing import TYPE_CHECKING, List, Optional
 
-from sqlalchemy import Boolean, CheckConstraint, DateTime, Index, Integer, String, Text, text
+from sqlalchemy import Boolean, CheckConstraint, DateTime, Index, Integer, String, Text, false, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship, validates
 
 from app.db.base import Base
@@ -12,6 +12,7 @@ if TYPE_CHECKING:
     from app.db.models.campaign import CampaignRecipient
     from app.db.models.follow_up import FollowUpSchedule
     from app.db.models.message import IncomingMessage, MessageLog
+    from app.db.models.respondent import Respondent
 
 
 ALLOWED_LEAD_STATUSES = {"Pending", "Replied", "Not Interested", "Interested"}
@@ -70,7 +71,7 @@ class Lead(Base):
         Boolean,
         nullable=False,
         default=False,
-        server_default=text("0"),
+        server_default=false(),
     )
     opt_in_status: Mapped[str] = mapped_column(
         String(20),
@@ -103,7 +104,7 @@ class Lead(Base):
         Boolean,
         nullable=False,
         default=False,
-        server_default=text("0"),
+        server_default=false(),
         index=True,
     )
     followed_up_at: Mapped[Optional[datetime]] = mapped_column(
@@ -143,6 +144,10 @@ class Lead(Base):
     )
     incoming_messages: Mapped[List["IncomingMessage"]] = relationship(
         "IncomingMessage",
+        back_populates="lead",
+    )
+    respondents: Mapped[List["Respondent"]] = relationship(
+        "Respondent",
         back_populates="lead",
     )
 

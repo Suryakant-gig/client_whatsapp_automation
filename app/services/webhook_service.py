@@ -12,9 +12,10 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.config import get_settings
-from app.db.models.follow_up import FollowUpSchedule
+from app.db.models.campaign import CampaignBatch, CampaignRecipient
 from app.db.models.lead import Lead
 from app.db.models.message import IncomingMessage, MessageLog
+from app.db.models.respondent import Respondent
 
 logger = logging.getLogger("app.services.webhook")
 
@@ -330,15 +331,21 @@ class WebhookService:
         return None
 
     @staticmethod
-    def process_incoming_message(db: Session, message_data: Dict[str, Any]) -> Optional[IncomingMessage]:
-        """Process an inbound customer WhatsApp message.
+    def process_incoming_message(
+        db: Session,
+        message_data: Dict[str, Any],
+        profile_name: Optional[str] = None,
+    ) -> Optional[IncomingMessage]:
+        """Process an inbound customer WhatsApp message and maintain Respondent record.
 
         Enforces:
         - Unique whatsapp_message_id check (idempotency deduplication).
         - Normalized phone matching across country-code formats.
-        - Opt-out detection (marking OPTED_OUT, Not Interested, cancelling follow-ups).
-        - Default auto-marking as 'Interested' and 'needs_manual_followup=True'.
-        - Unified audit logging in IncomingMessage and MessageLog.
+        - Every incoming sender is permanently recorded in the respondents table.
+        - Existing respondent records are updated rather than creating duplicates.
+        - Default classification is UNCLASSIFIED (NEVER automatically classified as Interested).
+        - Message stored in IncomingMessage and MessageLog.
+        - Opt-out intent detection enforces marketing consent revocation on Lead.
         - Privacy protection: phone masked in logs, sensitive data sanitized.
         """
         wa_id = message_data.get("id")
@@ -376,11 +383,66 @@ class WebhookService:
         except (ValueError, TypeError):
             received_at = datetime.now(timezone.utc)
 
+        # Normalize phone for consistent respondent storage (+<digits>)
+        digits_only = re.sub(r"\D", "", sender_phone)
+        canonical_phone = f"+{digits_only}" if digits_only else sender_phone
+
         # 2. Match lead by sender phone number (normalized)
         lead = WebhookService.find_lead_by_phone(db, sender_phone)
         lead_id: Optional[int] = lead.id if lead else None
 
-        # 3. Opt-out vs Interested logic
+        # 3. Identify original broadcast campaign if applicable
+        original_campaign_id = None
+        if lead:
+            original_campaign_id = db.scalar(
+                select(CampaignBatch.campaign_id)
+                .join(CampaignRecipient, CampaignRecipient.batch_id == CampaignBatch.id)
+                .where(CampaignRecipient.lead_id == lead.id)
+                .order_by(CampaignRecipient.id.desc())
+            )
+
+        # 4. Create or update Respondent record (never duplicate)
+        phone_candidates = {canonical_phone, sender_phone}
+        if digits_only:
+            phone_candidates.update({digits_only, f"+{digits_only}"})
+
+        respondent = db.execute(
+            select(Respondent).where(Respondent.phone_number.in_(phone_candidates))
+        ).scalars().first()
+
+        resolved_name = (
+            profile_name
+            or (lead.customer_name if lead and lead.customer_name else None)
+        )
+
+        if respondent:
+            # Update existing respondent
+            respondent.last_reply_at = received_at
+            if not respondent.lead_id and lead_id:
+                respondent.lead_id = lead_id
+            if not respondent.original_campaign_id and original_campaign_id:
+                respondent.original_campaign_id = original_campaign_id
+            if resolved_name and not respondent.name:
+                respondent.name = resolved_name
+            respondent.updated_at = received_at
+            logger.info("Updated existing respondent %d for %s", respondent.id, mask_phone(canonical_phone))
+        else:
+            # Create new permanent respondent with default classification UNCLASSIFIED
+            # STRICT INSTRUCTION: Do NOT automatically classify as Interested
+            respondent = Respondent(
+                lead_id=lead_id,
+                phone_number=canonical_phone,
+                name=resolved_name,
+                classification="UNCLASSIFIED",
+                first_reply_at=received_at,
+                last_reply_at=received_at,
+                original_campaign_id=original_campaign_id,
+                internal_notes=None,
+            )
+            db.add(respondent)
+            logger.info("Created new UNCLASSIFIED respondent for %s", mask_phone(canonical_phone))
+
+        # 5. Lead consent & status tracking
         if lead:
             if is_opt_out_reply(message_text):
                 logger.info("Opt-out keyword received from lead %d (%s)", lead.id, mask_phone(sender_phone))
@@ -392,28 +454,25 @@ class WebhookService:
                 lead.last_replied_at = received_at
                 lead.follow_up_paused = True
                 lead.updated_at = received_at
-
-                # Cancel any pending follow-up schedules
-                pending_schedules = db.scalars(
-                    select(FollowUpSchedule).where(
-                        FollowUpSchedule.lead_id == lead.id,
-                        FollowUpSchedule.status.in_(["Scheduled", "Approved", "Pending"]),
+                # Cancel any legacy follow-up schedules if present
+                try:
+                    from app.db.models.followup import FollowUpSchedule
+                    from sqlalchemy import update
+                    db.execute(
+                        update(FollowUpSchedule)
+                        .where(FollowUpSchedule.lead_id == lead.id, FollowUpSchedule.status.in_(["Scheduled", "Approved"]))
+                        .values(status="Cancelled")
                     )
-                ).all()
-                for sched in pending_schedules:
-                    sched.status = "Skipped"
-                    sched.skip_reason = "Customer opted out via WhatsApp reply"
-                    sched.processed_at = received_at
-                    sched.updated_at = received_at
+                except Exception:
+                    pass
             else:
-                logger.info("Inbound reply from lead %d (%s) marked Interested", lead.id, mask_phone(sender_phone))
-                lead.status = "Interested"
-                lead.needs_manual_followup = True
+                logger.info("Inbound reply recorded for lead %d (%s)", lead.id, mask_phone(sender_phone))
+                lead.status = "Replied"
                 lead.last_reply_text = message_text
                 lead.last_replied_at = received_at
                 lead.updated_at = received_at
         else:
-            logger.info("Inbound WhatsApp message from unknown sender %s recorded without lead match", mask_phone(sender_phone))
+            logger.info("Inbound WhatsApp message from non-lead contact %s recorded", mask_phone(sender_phone))
 
         # Log event with masked phone number
         logger.info(
@@ -482,7 +541,21 @@ class WebhookService:
                 if not isinstance(value, dict):
                     continue
 
-                # Process status events
+                # Extract contact profile names if present in payload
+                contacts_list = value.get("contacts", [])
+                profile_map: Dict[str, str] = {}
+                if isinstance(contacts_list, list):
+                    for c in contacts_list:
+                        if isinstance(c, dict):
+                            wa_id = str(c.get("wa_id") or "").strip()
+                            name = (c.get("profile", {}) or {}).get("name")
+                            if wa_id and name:
+                                profile_map[wa_id] = name
+                                digits = re.sub(r"\D", "", wa_id)
+                                if digits:
+                                    profile_map[digits] = name
+
+                # Process delivery status events (DO NOT touch Respondents)
                 statuses = value.get("statuses", [])
                 if isinstance(statuses, list):
                     for st in statuses:
@@ -496,7 +569,10 @@ class WebhookService:
                 if isinstance(messages, list):
                     for msg in messages:
                         if isinstance(msg, dict):
-                            res = WebhookService.process_incoming_message(db, msg)
+                            sender = str(msg.get("from") or "").strip()
+                            sender_digits = re.sub(r"\D", "", sender)
+                            p_name = profile_map.get(sender) or profile_map.get(sender_digits)
+                            res = WebhookService.process_incoming_message(db, msg, profile_name=p_name)
                             if res:
                                 processed_messages += 1
 

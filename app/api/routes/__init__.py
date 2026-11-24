@@ -7,10 +7,11 @@ from app.api.routes.auth import router as auth_router
 from app.api.routes.campaigns import router as campaign_router
 from app.api.routes.dashboard import router as dashboard_router
 from app.api.routes.excel_routes import router as excel_router
-from app.api.routes.followups import router as followup_router
 from app.api.routes.health import router as health_router
 from app.api.routes.import_routes import router as import_router
 from app.api.routes.leads import router as lead_router
+from app.api.routes.respondents import router as respondent_router
+from app.api.routes.settings import router as settings_router
 from app.api.routes.templates import router as template_router
 from app.api.routes.webhook import router as webhook_router
 from app.api.routes.whatsapp import router as whatsapp_router
@@ -36,8 +37,11 @@ api_router.include_router(excel_router, dependencies=protected_dependencies)
 # Phase 4: Lead Management routes
 api_router.include_router(lead_router, dependencies=protected_dependencies)
 
-# Phase 5: Follow-up Scheduler routes
-api_router.include_router(followup_router, dependencies=protected_dependencies)
+# Respondent Management and Manual Contact routes
+api_router.include_router(respondent_router, dependencies=protected_dependencies)
+
+# Application & Security Settings routes
+api_router.include_router(settings_router, dependencies=protected_dependencies)
 
 # Phase 6: WhatsApp Cloud API & Template routes
 api_router.include_router(template_router, dependencies=protected_dependencies)

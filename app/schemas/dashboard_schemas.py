@@ -31,8 +31,11 @@ class DashboardStatsResponse(BaseModel):
     read_messages: int = Field(default=0, description="Messages confirmed Read by recipient")
     failed_messages: int = Field(default=0, description="Messages that failed delivery")
 
-    # Follow-up automation
-    scheduled_follow_ups: int = Field(default=0, description="Active pending follow-up schedules")
+    # Follow-up automation & respondents
+    scheduled_follow_ups: int = Field(default=0, description="Active pending follow-up schedules (deprecated: always 0)")
+    total_respondents: int = Field(default=0, description="Total unique WhatsApp respondents")
+    interested_respondents: int = Field(default=0, description="Respondents classified as INTERESTED")
+    unclassified_respondents: int = Field(default=0, description="Respondents currently UNCLASSIFIED")
     last_sync_timestamp: Optional[datetime] = Field(default=None, description="Timestamp of most recent workbook sync")
 
     model_config = ConfigDict(from_attributes=True)

@@ -21,6 +21,7 @@ from app.db.base import Base
 if TYPE_CHECKING:
     from app.db.models.lead import Lead
     from app.db.models.message import MessageLog
+    from app.db.models.respondent import Respondent
 
 
 ALLOWED_CAMPAIGN_STATUSES = {"Draft", "Scheduled", "In Progress", "Completed", "Cancelled"}
@@ -87,6 +88,10 @@ class Campaign(Base):
         "CampaignBatch",
         back_populates="campaign",
         cascade="all, delete-orphan",
+    )
+    respondents: Mapped[List["Respondent"]] = relationship(
+        "Respondent",
+        back_populates="original_campaign",
     )
 
     @validates("status")
